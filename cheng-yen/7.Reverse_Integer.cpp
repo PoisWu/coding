@@ -28,7 +28,7 @@ class Solution{
 
 int main(){
     Solution s = Solution();
-    long x = 1534236469;
+    long x = 12348748;
     long ok=s.reverse(x);
     cout << ok <<endl;
 }
