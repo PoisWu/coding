@@ -25,6 +25,7 @@ class Solution{
             }
             return max_area;
         }
+
 };
 
 int main(){
