@@ -63,7 +63,7 @@ int main(){
     vec1.push_back(4);
     /*vec1 = [-1,0,1,2,-1,-4,-2,-3,3,0,4];*/
 
-    sort(vec1.begin(), vec1.end());
+    //sort(vec1.begin(), vec1.end());
     
     vec2 = s.threeSum(vec1);
 
