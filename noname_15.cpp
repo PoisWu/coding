@@ -6,74 +6,45 @@
 using namespace std;
 
 
-bool sort_vector(vector<int> v1,vector<int> v2){
-    //cout << v1.size() << " " <<v2.size() <<endl;
-    for(int i=0;i<3;i++){
-            if(v2[i]!=v1[i]) return v1[i]<v2[i];
-    }
-    return false;
-}
-
 class Solution{
     public: 
         vector<vector<int> > threeSum(vector<int>& nums){
-            vector<vector<int> > output = vector<vector<int> >() ;
+            vector<vector<int> > result = vector<vector<int> >();
+            if(nums.size()<3) return result;
             sort(nums.begin(),nums.end());
-            //cout << "creat output"<<endl;
-            if(nums.size()<3) return output;
-                map<int,vector< pair<int,int> > > table = map<int,vector<pair<int,int> > >();
-            //cout<< "creat table" <<endl;
-            for(int i=0; i<nums.size();i++){
-                for(int j=i+1;j<nums.size();j++){
-                    int two_Sum = nums[i]+nums[j];
-                    if(!table.count(two_Sum)){
-                        table[two_Sum]=vector<pair<int,int> >();
-                    } 
-                    table[two_Sum].push_back(pair<int,int> (i,j));
-                }
-            }     
-            //cout <<"table done"<<endl;
-
-            int buff[3];
-            for(int i = 0 ; i < nums.size(); i++){
-                int target_i = nums[i]*(-1);
-                if(table.count(target_i)){
-                    for(int j = 0 ; j<table[target_i].size();j++){
-                        int fst = table[target_i][j].first;
-                        int scd = table[target_i][j].second;
-                        if(i!=fst && i!=scd){
-                            int index_3[3]={i,fst,scd};
-                            sort(index_3,index_3+3);
-                            buff[0]=nums[index_3[0]];
-                            buff[1]=nums[index_3[1]];
-                            buff[2]=nums[index_3[2]];
-                            vector<int> buf_vect(buff,buff+3);
-                            output.push_back(buf_vect);
+            for(int i = 0; i<nums.size()-2;i++){
+                if(i==0 || nums[i]!=nums[i-1]){
+                    int start = i+1;
+                    int end = nums.size()-1;
+                    int repeat = 0;
+                    while(start<=end){
+                        if(nums[start] + nums[end] == nums[i]*(-1)){
+                            if(repeat) start++;
+                            else{
+                                vector<int> tmp = vector<int>();
+                                tmp.push_back(nums[i]);
+                                tmp.push_back(nums[start]);
+                                tmp.push_back(nums[end]);
+                                result.push_back(tmp);
+                                repeat=1;
+                                start++;
+                            }
+                        }else{
+                            if(nums[start] + nums[end] < nums[i]*(-1)){
+                                repeat=0;
+                                start++;
+                            }else{
+                                repeat=0;
+                                end--;
+                            }
                         }
                     }
                 }
             }
+            return result;
 
-            //cout<<"output done" <<endl; 
 
-            if(output.size()==0||output.size()==1) return output; 
-            //cout << output.size() <<endl;
-            sort(output.begin(),output.begin()+output.size(),sort_vector);
-
-            //cout << "output sorted" <<endl;
-
-            vector<vector<int> > refine_output = vector<vector<int> >();
-            refine_output.push_back(output[0]);
-            int pointer=0;
-            for(int i=1;i<output.size();i++){
-                if(output[i][0]>refine_output[pointer][0]||output[i][1]>refine_output[pointer][1]|| output[i][2]>refine_output[pointer][2]){
-                    refine_output.push_back(output[i]);
-                    pointer++;
-                }
-            };
-            //cout << "refine_output" << endl;
-            return refine_output;
-        }
+        }            
 };
 
 int main(){
