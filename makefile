@@ -1,4 +1,4 @@
 all:
-	g++ -g noname_17.cpp -o out
+	g++ -g noname_7-2.cpp -o out
 clean:
 	rm -f out
