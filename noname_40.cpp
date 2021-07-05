@@ -1,6 +1,6 @@
 /**
  * Creater: Nonamefour
- * Creat data:2021-06-29
+ * Creat data:2021-07-05
  * Purpose:leet 39.Comibnaiton Sum
  *
  * End data:07-05
@@ -20,12 +20,16 @@ void aux(vector<int>& nums,vector<vector<int>> & result, vector<int> & partial, 
     }
     if(target<0 || pos==nums.size()) return ;
     partial.push_back(nums[pos]);
-    aux(nums,result,partial,pos,target-nums[pos]);
+    int pos_next=pos;
+    while(pos_next<nums.size() && nums[pos_next]==nums[pos]) pos_next++;
+    aux(nums,result,partial,pos_next,target-nums[pos]);
     partial.pop_back();
-    aux(nums,result,partial,pos+1,target);
+    aux(nums,result,partial,pos_next,target);
 }
 
-vector<vector<int>> combinationSUm(vector<int> & candidates,int target){
+vector<vector<int>> combinationSum2(vector<int> & candidates,int target){
+    sort(candidates.begin(),candidates.end());
+
     vector<vector<int>> result = vector<vector<int>>();
     vector<int> partial = vector<int>();
     aux(candidates,result,partial,0,target);
