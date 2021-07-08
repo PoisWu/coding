@@ -3,7 +3,7 @@
  * Creat data:2021-07-05
  * Purpose:leet 39.Comibnaiton Sum
  *
- * End data:07-05
+ * End data:07-06
  */
 
 
@@ -19,11 +19,13 @@ void aux(vector<int>& nums,vector<vector<int>> & result, vector<int> & partial, 
         return;
     }
     if(target<0 || pos==nums.size()) return ;
-    partial.push_back(nums[pos]);
     int pos_next=pos;
     while(pos_next<nums.size() && nums[pos_next]==nums[pos]) pos_next++;
-    aux(nums,result,partial,pos_next,target-nums[pos]);
-    partial.pop_back();
+    for(int i = pos;i<pos_next;i++){
+        partial.push_back(nums[pos]);
+        aux(nums,result,partial,pos_next,target-(i-pos+1)*nums[pos]);
+    }
+    for(int i=pos;i<pos_next;i++) partial.pop_back();
     aux(nums,result,partial,pos_next,target);
 }
 
