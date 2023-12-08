@@ -1,4 +1,2 @@
-all:
-	g++ -g noname_22.cpp -o out
-clean:
-	rm -f out
+all: 86.c
+	gcc -g -Wall -o main 86.c
