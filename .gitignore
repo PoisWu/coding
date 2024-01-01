@@ -32,8 +32,9 @@ out*
 *.exe
 *.out
 *.app
+main
 
 .DS_Store
-makefile
+# makefile
 
 a*
