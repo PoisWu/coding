@@ -15,5 +15,7 @@ void print_2d_vector(vector<vector<T> > vvec){
 int main(){
     Solution solver;
     cout << "start" << endl;
+    vector<string> v1{"011001","000000","010100","001000"};
+    cout << solver.numberOfBeams(v1);
     
 }
