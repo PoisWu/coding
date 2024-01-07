@@ -15,11 +15,7 @@ public:
         int dp[n][n];
         map<long long, vector<int> > num_pos;
         for (int i = 0; i < n; i++) {
-            if (num_pos.count((long long) nums[i])) {
-                num_pos[(long long) nums[i]].push_back(i);
-            } else {
-                num_pos[(long long) nums[i]] = {i};
-            }
+            num_pos[(long long) nums[i]].push_back(i);
         }
         int res = 0;
         for (int i = 0; i < n; i++) {
