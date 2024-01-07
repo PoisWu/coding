@@ -1,34 +1,36 @@
+#include <algorithm>  //min
 #include <iostream>
 #include <vector>
-#include <algorithm> //min
 
 using namespace std;
 
-class Solution{
-    public:
-        int maxArea(vector<int>& height){
-            int end = height.size()-1;
-            int start = 0;
-            int max_area=0;
-            while(start<end){
-                if(height[start]<height[end]){
-                    if(height[start]*(end-start)>max_area){
-                        max_area=height[start]*(end-start);
-                    }
-                    start++;
-                }else{
-                    if(height[end]*(end-start)>max_area){
-                        max_area=height[end]*(end-start);
-                    }
-                    end--;
+class Solution
+{
+public:
+    int maxArea(vector<int> &height)
+    {
+        int end = height.size() - 1;
+        int start = 0;
+        int max_area = 0;
+        while (start < end) {
+            if (height[start] < height[end]) {
+                if (height[start] * (end - start) > max_area) {
+                    max_area = height[start] * (end - start);
                 }
+                start++;
+            } else {
+                if (height[end] * (end - start) > max_area) {
+                    max_area = height[end] * (end - start);
+                }
+                end--;
             }
-            return max_area;
         }
-
+        return max_area;
+    }
 };
 
-int main(){
+int main()
+{
     Solution s = Solution();
     vector<int> vect;
     vect.push_back(1);
@@ -42,5 +44,4 @@ int main(){
     vect.push_back(7);
 
     cout << s.maxArea(vect);
-
 }

@@ -12,7 +12,7 @@
  *      49.13%
  */
 
-#include<iostream> 
+#include <iostream>
 
 using namespace std;
 
@@ -24,25 +24,27 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
-class Solution{
-    public:
-        ListNode* swapPairs(ListNode* head){
-            ListNode dummy = ListNode();
-            dummy.next = head;
-            ListNode *walker = &dummy;
-            while(walker->next != NULL && walker->next->next != NULL){
-                ListNode * child = walker->next;
-                ListNode * grand_child = walker->next->next;
-                walker->next = grand_child;
-                child->next = grand_child->next;
-                grand_child->next=child;
-                walker = walker->next->next;
-            }
-            return dummy.next;
+class Solution
+{
+public:
+    ListNode *swapPairs(ListNode *head)
+    {
+        ListNode dummy = ListNode();
+        dummy.next = head;
+        ListNode *walker = &dummy;
+        while (walker->next != NULL && walker->next->next != NULL) {
+            ListNode *child = walker->next;
+            ListNode *grand_child = walker->next->next;
+            walker->next = grand_child;
+            child->next = grand_child->next;
+            grand_child->next = child;
+            walker = walker->next->next;
         }
+        return dummy.next;
+    }
 };
 
-int main(){
-    
+int main()
+{
     return 0;
 }
