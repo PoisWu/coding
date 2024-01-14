@@ -1,6 +1,8 @@
 #include <algorithm>
+#include <array>
 #include <iostream>
 #include <map>
+#include <string>
 #include <vector>
 
 struct TreeNode {
@@ -13,7 +15,7 @@ struct TreeNode {
         : val(x), left(left), right(right)
     {
     }
-}
+};
 
 using namespace std;
 
