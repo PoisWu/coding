@@ -24,5 +24,9 @@ using namespace std;
 class Solution
 {
 public:
-    long long minimumCost(vector<int> &nums, int k, int dist) {}
+    int rob(vector<int> &nums)
+    {
+        array<int, nums.size()> dp;
+        // dp[i] store how much money can still from
+    }
 };
