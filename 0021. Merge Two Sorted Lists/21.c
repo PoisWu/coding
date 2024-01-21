@@ -1,21 +1,24 @@
-# include <stddef.h>
-# include <stdio.h>
+#include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 struct ListNode {
     int val;
     struct ListNode *next;
 };
- 
-/* struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){ */
 
-/*     /1* struct ListNode* head = (list1->value < list2->value) ? list1 : list2 ; *1/ */
+/* struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode*
+ * list2){ */
+
+/*     /1* struct ListNode* head = (list1->value < list2->value) ? list1 : list2
+ * ; *1/ */
 /*     struct ListNode* head; */
 /*     struct ListNode* ptr; */
 /*     struct ListNode* node; */
 /*     int isFirst = 1; */
-    
+
 /*     // problem: didn't update list1, list2 */
-/*     for (; node = (list1->val < list2->val) ? list1: list2 ; list1 || list2){ */
+/*     for (; node = (list1->val < list2->val) ? list1: list2 ; list1 || list2){
+ */
 /*         if (isFirst){ */
 /*             head = node; */
 /*             ptr = node; */
@@ -24,7 +27,7 @@ struct ListNode {
 /*             ptr -> next = node; */
 /*             ptr = ptr-> next; */
 /*         } */
-/*         node = node -> next; */ 
+/*         node = node -> next; */
 /*     } */
 /*     if (!list1) ptr -> next = list2; */
 /*     if (!list2) ptr -> next = list1; */
@@ -32,10 +35,11 @@ struct ListNode {
 /*     return head; */
 /* } */
 
-/* struct ListNode* mergeTwoLists(struct ListNode * list1, struct ListNode * list2){ */
+/* struct ListNode* mergeTwoLists(struct ListNode * list1, struct ListNode *
+ * list2){ */
 /*     struct ListNode* head; */
 /*     struct ListNode* ptr; */
-/*     int isFirst = 1; */ 
+/*     int isFirst = 1; */
 /*     while(list1 && list2){ */
 /*         if (isFirst){ */
 /*             if (list1 -> val < list2 -> val){ */
@@ -65,7 +69,8 @@ struct ListNode {
 /* } */
 
 // (Kind of Solution
-/* struct ListNode* mergeTwoLists(struct ListNode * list1, struct ListNode * list2){ */
+/* struct ListNode* mergeTwoLists(struct ListNode * list1, struct ListNode *
+ * list2){ */
 /*     struct ListNode* head=malloc(sizeof(struct ListNode)); */
 /*     struct ListNode* ptr = head; */
 /*     while(list1 && list2){ */
@@ -85,22 +90,24 @@ struct ListNode {
 /* } */
 
 
-struct ListNode* mergeTwoLists(struct ListNode * list1, struct ListNode * list2){
-    struct ListNode* head;
-    struct ListNode** ptr = &head;
-    struct ListNode** node;
-    for (node=NULL ; list1 && list2 ; *node = (*node) -> next ){
-        node = list1 -> val < list2 -> val ? &list1 : &list2;
+struct ListNode *mergeTwoLists(struct ListNode *list1, struct ListNode *list2)
+{
+    struct ListNode *head;
+    struct ListNode **ptr = &head;
+    struct ListNode **node;
+    for (node = NULL; list1 && list2; *node = (*node)->next) {
+        node = list1->val < list2->val ? &list1 : &list2;
         *ptr = *node;
         ptr = &(*ptr)->next;
     }
 
-    *ptr = (struct ListNode *)((uintptr_t) list1 | (uintptr_t) list2);
+    *ptr = (struct ListNode *) ((uintptr_t) list1 | (uintptr_t) list2);
 
-    return head ;
+    return head;
 }
 
-int main(){
+int main()
+{
     struct ListNode lst1;
     struct ListNode val0;
     struct ListNode val1;
@@ -125,10 +132,10 @@ int main(){
     val5.next = NULL;
 
 
-    struct ListNode* merged = mergeTwoLists(&lst1, &lst2);
-    while (merged){
+    struct ListNode *merged = mergeTwoLists(&lst1, &lst2);
+    while (merged) {
         printf("%d ", merged->val);
-        merged = merged ->next;
+        merged = merged->next;
     }
 
     return 0;

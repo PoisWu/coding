@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 
- struct ListNode {
-     int val;
-     struct ListNode *next;
- };
- 
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
+
 // v1 simple pointer
 /* struct ListNode* deleteMiddle(struct ListNode* head){ */
 /*     struct ListNode* fast = head; */
@@ -23,20 +23,22 @@
 /*     return head; */
 /* } */
 
-// fast!=NULL && fast -> next !=NULL can be writen as 
+// fast!=NULL && fast -> next !=NULL can be writen as
 // fast && fast->next
 // v2 double pointer
-struct ListNode* deleteMiddle(struct ListNode* head){
-    struct ListNode** inptr = &head;
+struct ListNode *deleteMiddle(struct ListNode *head)
+{
+    struct ListNode **inptr = &head;
 
-    for (struct ListNode* fast = head; fast&& fast -> next; fast = fast->next->next){
-        inptr = &(*inptr) -> next;
+    for (struct ListNode *fast = head; fast && fast->next;
+         fast = fast->next->next) {
+        inptr = &(*inptr)->next;
     }
     *inptr = (*inptr)->next;
     return head;
 }
 
-int main(){
-    
+int main()
+{
     return 0;
 }
