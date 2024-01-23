@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <array>
+#include <bitset>
 #include <iostream>
 #include <map>
 #include <string>
@@ -25,3 +26,9 @@ class Solution
 {
 public:
 };
+
+int main()
+{
+    Solution solver;
+    vector < ? ? > v1 = {};
+}
