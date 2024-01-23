@@ -53,6 +53,19 @@ int main()
 {
     Solution solver;
     vector < ? ? > v1 = {};
+    strint s1 = "";
+    strint t1 = "";
+
+    // Following tree
+    //              - Null
+    //       - 5 - |
+    //      |      |      - 9
+    //  1 - |       - 4 -|
+    //      |             - 2
+    //      |       - 10
+    //       - 3 - |
+    //              - 6
+    //
     // TreeNode two = TreeNode(2);
     // TreeNode nine = TreeNode(9);
     // TreeNode four = TreeNode(4, &nine, &two);
@@ -61,13 +74,4 @@ int main()
     // TreeNode six = TreeNode(6);
     // TreeNode three = TreeNode(3, &ten, &six);
     // TreeNode one = TreeNode(1, &five, &three);
-    //    1 - 5 - Null
-    //      \   \
-    //            4  - 9
-    //               \
-    //                 2
-    //        3 - 10
-    //          \ 
-    //            6
-    //
 }
