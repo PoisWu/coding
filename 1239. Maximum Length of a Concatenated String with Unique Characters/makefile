@@ -1,7 +1,7 @@
 CXX      := g++
 # CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror
 CXXFLAGS := -Wall -Wextra -g
-SRC      := test.cpp solution.cpp 
+SRC      := solution.cpp 
 
 OBJECTS  := $(SRC:%.cpp=%.o)
 
