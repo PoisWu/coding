@@ -3,6 +3,7 @@
 #include <bitset>
 #include <iostream>
 #include <map>
+#include <queue>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -22,6 +23,26 @@ struct TreeNode {
 
 using namespace std;
 
+void print_2d_vector(vector<vector<T> > vvec)
+{
+    for (auto vec : vvec) {
+        for (auto e : vec) {
+            cout << e << " ";
+        }
+        cout << endl;
+    }
+}
+
+template <typename T>
+void print_vector(vector<T> vec)
+{
+    for (auto e : vec) {
+        cout << e << " ";
+    }
+    cout << endl;
+}
+
+
 class Solution
 {
 public:
@@ -31,4 +52,21 @@ int main()
 {
     Solution solver;
     vector < ? ? > v1 = {};
+    // TreeNode two = TreeNode(2);
+    // TreeNode nine = TreeNode(9);
+    // TreeNode four = TreeNode(4, &nine, &two);
+    // TreeNode five = TreeNode(5, NULL, &four);
+    // TreeNode ten = TreeNode(10);
+    // TreeNode six = TreeNode(6);
+    // TreeNode three = TreeNode(3, &ten, &six);
+    // TreeNode one = TreeNode(1, &five, &three);
+    //    1 - 5 - Null
+    //      \   \
+    //            4  - 9
+    //               \
+    //                 2
+    //        3 - 10
+    //          \ 
+    //            6
+    //
 }
