@@ -47,27 +47,39 @@ void print_vector(vector<T> vec)
 class Solution
 {
 public:
+    int minSteps(string s, string t)
+    {
+        unordered_map<char, int> freq_s;
+        unordered_map<char, int> freq_t;
+        unordered_set<char> chars;
+        for (char &c : s) {
+            freq_s[c]++;
+            chars.insert(c);
+        }
+
+        for (char &c : t) {
+            freq_t[c]++;
+            chars.insert(c);
+        }
+
+        int diff = 0;
+        for (auto &c : chars) {
+            diff += abs(freq_t[c] - freq_s[c]);
+        }
+        return diff / 2;
+    }
 };
 
 int main()
 {
     Solution solver;
-    vector < ? ? > v1 = {};
-    // TreeNode two = TreeNode(2);
-    // TreeNode nine = TreeNode(9);
-    // TreeNode four = TreeNode(4, &nine, &two);
-    // TreeNode five = TreeNode(5, NULL, &four);
-    // TreeNode ten = TreeNode(10);
-    // TreeNode six = TreeNode(6);
-    // TreeNode three = TreeNode(3, &ten, &six);
-    // TreeNode one = TreeNode(1, &five, &three);
-    //    1 - 5 - Null
-    //      \   \
-    //            4  - 9
-    //               \
-    //                 2
-    //        3 - 10
-    //          \ 
-    //            6
-    //
+    string s1 = "bab";
+    string t1 = "aba";
+    string s2 = "leetcode";
+    string t2 = "practice";
+    string s3 = "anagram";
+    string t3 = "mangaar";
+    cout << solver.minSteps(s1, t1) << endl;
+    cout << solver.minSteps(s2, t2) << endl;
+    cout << solver.minSteps(s3, t3) << endl;
 }
