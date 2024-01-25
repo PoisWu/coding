@@ -47,31 +47,35 @@ void print_vector(vector<T> vec)
 class Solution
 {
 public:
+    int longestCommonSubsequence(string s, string t)
+    {
+        int n = s.length();
+        int m = t.length();
+        int dp[n + 1][m + 1];
+        for (int i = 0; i < n + 1; i++) {
+            dp[i][0] = 0;
+        }
+        for (int j = 0; j < m + 1; j++) {
+            dp[0][j] = 0;
+        }
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < m + 1; j++) {
+                // string s1, s2 1-index
+                if (s[i - 1] == t[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[n][m];
+    }
 };
 
 int main()
 {
     Solution solver;
-    vector < ? ? > v1 = {};
-    string s1 = "";
-    string t1 = "";
-
-    // Following tree
-    //              - Null
-    //       - 5 - |
-    //      |      |      - 9
-    //  1 - |       - 4 -|
-    //      |             - 2
-    //      |       - 10
-    //       - 3 - |
-    //              - 6
-    //
-    // TreeNode two = TreeNode(2);
-    // TreeNode nine = TreeNode(9);
-    // TreeNode four = TreeNode(4, &nine, &two);
-    // TreeNode five = TreeNode(5, NULL, &four);
-    // TreeNode ten = TreeNode(10);
-    // TreeNode six = TreeNode(6);
-    // TreeNode three = TreeNode(3, &ten, &six);
-    // TreeNode one = TreeNode(1, &five, &three);
+    string s1 = "abcde";
+    string t1 = "ace";
+    cout << solver.longestCommonSubsequence(s1, t1) << endl;
 }
