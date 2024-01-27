@@ -47,7 +47,7 @@ void print_vector(vector<T> vec)
 class Solution
 {
 private:
-    static const int modulo = 1000000007;
+    static const int mod = 1000000007;
 
 public:
 };
