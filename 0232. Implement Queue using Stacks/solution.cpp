@@ -45,37 +45,52 @@ void print_vector(vector<T> vec)
 }
 
 
-class Solution
+class MyQueue
 {
 private:
-    static const int mod = 1000000007;
+    stack<int> one;
+    stack<int> two;
 
 public:
+    MyQueue() {}
+
+    void push(int x) { one.push(x); }
+
+    int pop()
+    {
+        int n;
+        if (two.empty()) {
+            while (!one.empty()) {
+                int tmp = one.top();
+                two.push(tmp);
+                one.pop();
+            }
+        }
+        n = two.top();
+        two.pop();
+        return n;
+    }
+
+    int peek()
+    {
+        int n;
+        if (two.empty()) {
+            while (!one.empty()) {
+                int tmp = one.top();
+                two.push(tmp);
+                one.pop();
+            }
+        }
+        n = two.top();
+        return n;
+    }
+
+    bool empty() { return two.empty() && one.empty(); }
 };
 
 int main()
 {
-    Solution solver;
-    vector < ? ? > v1 = {};
-    string s1 = "";
-    string t1 = "";
-
-    // Following tree
-    //              - Null
-    //       - 5 - |
-    //      |      |      - 9
-    //  1 - |       - 4 -|
-    //      |             - 2
-    //      |       - 10
-    //       - 3 - |
-    //              - 6
-    //
-    // TreeNode two = TreeNode(2);
-    // TreeNode nine = TreeNode(9);
-    // TreeNode four = TreeNode(4, &nine, &two);
-    // TreeNode five = TreeNode(5, NULL, &four);
-    // TreeNode ten = TreeNode(10);
-    // TreeNode six = TreeNode(6);
-    // TreeNode three = TreeNode(3, &ten, &six);
-    // TreeNode one = TreeNode(1, &five, &three);
+    MyQueue a = MyQueue();
+    a.push(1);
+    cout << a.pop() << endl;
 }
