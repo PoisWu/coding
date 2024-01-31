@@ -1,19 +1,12 @@
 CXX      := g++
 # CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror
 CXXFLAGS := -Wall -Wextra -g
-SRC      := solution.cpp 
 
-OBJECTS  := $(SRC:%.cpp=%.o)
-
-
-main: $(OBJECTS)
+main: main.cpp
 	$(CXX) $(CXXFLAGS) -o main $^ 
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
 run: 
-	./main
+	./main < in.txt
 
 clean:
 	-@rm -rvf ./*.o
