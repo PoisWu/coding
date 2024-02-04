@@ -43,6 +43,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 
     // Following tree
@@ -84,4 +86,3 @@ void print_2d_vector(vector<vector<T> > vvec)
         cout << endl;
     }
 }
-
