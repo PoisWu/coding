@@ -25,25 +25,9 @@ struct TreeNode {
 using namespace std;
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec)
-{
-    for (auto vec : vvec) {
-        for (auto e : vec) {
-            cout << e << " ";
-        }
-        cout << endl;
-    }
-}
-
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
-void print_vector(vector<T> vec)
-{
-    for (auto e : vec) {
-        cout << e << " ";
-    }
-    cout << endl;
-}
-
+void print_vector(vector<T> vec);
 
 class Solution
 {
@@ -56,9 +40,10 @@ public:
 int main()
 {
     Solution solver;
-    vector < ? ? > v1 = {};
+    vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
+    return 0;
 
     // Following tree
     //              - Null
@@ -79,3 +64,24 @@ int main()
     // TreeNode three = TreeNode(3, &ten, &six);
     // TreeNode one = TreeNode(1, &five, &three);
 }
+
+template <typename T>
+void print_vector(vector<T> vec)
+{
+    for (auto e : vec) {
+        cout << e << " ";
+    }
+    cout << endl;
+}
+
+template <typename T>
+void print_2d_vector(vector<vector<T> > vvec)
+{
+    for (auto vec : vvec) {
+        for (auto e : vec) {
+            cout << e << " ";
+        }
+        cout << endl;
+    }
+}
+
