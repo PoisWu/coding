@@ -25,9 +25,25 @@ struct TreeNode {
 using namespace std;
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec);
+void print_2d_vector(vector<vector<T> > vvec)
+{
+    for (auto vec : vvec) {
+        for (auto e : vec) {
+            cout << e << " ";
+        }
+        cout << endl;
+    }
+}
+
 template <typename T>
-void print_vector(vector<T> vec);
+void print_vector(vector<T> vec)
+{
+    for (auto e : vec) {
+        cout << e << " ";
+    }
+    cout << endl;
+}
+
 
 class Solution
 {
@@ -35,17 +51,32 @@ private:
     static const int mod = 1000000007;
 
 public:
+    string triangleType(vector<int> &nums)
+    {
+        sort(nums.begin(), nums.end());
+        if (nums[0] + nums[1] > nums[2]) {
+            int a = nums[0];
+            int b = nums[1];
+            int c = nums[2];
+            if (a == c) {
+                return "equilateral";
+            }
+            if (a == b || b == c) {
+                return "isosceles";
+            }
+            return "scalene";
+        } else {
+            return "none";
+        }
+    }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
+    vector < ? ? > v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
-    return 0;
 
     // Following tree
     //              - Null
@@ -65,24 +96,4 @@ int main()
     // TreeNode six = TreeNode(6);
     // TreeNode three = TreeNode(3, &ten, &six);
     // TreeNode one = TreeNode(1, &five, &three);
-}
-
-template <typename T>
-void print_vector(vector<T> vec)
-{
-    for (auto e : vec) {
-        cout << e << " ";
-    }
-    cout << endl;
-}
-
-template <typename T>
-void print_2d_vector(vector<vector<T> > vvec)
-{
-    for (auto vec : vvec) {
-        for (auto e : vec) {
-            cout << e << " ";
-        }
-        cout << endl;
-    }
 }
