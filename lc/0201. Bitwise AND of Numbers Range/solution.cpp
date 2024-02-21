@@ -29,24 +29,23 @@ private:
 public:
     int rangeBitwiseAnd(int left, int right)
     {
-        if (!left) {
-            return 0;
-        }
         if (left == right) {
-            ret
+            return left;
         }
+        // right - left != 0
         int leading_bit_pos = 0;
         for (int i = 31; i >= 0; i--) {
-            if ((left >> i) & 1) {
+            int bit_right = (right >> i) & 1;
+            int bit_left = (left >> i) & 1;
+            if (bit_right != bit_left) {
                 leading_bit_pos = i;
                 break;
             }
         }
-        if (right < (1 << (leading_bit_pos + 1))) {
-            return 1 << leading_bit_pos;
-        } else {
-            return 0;
-        }
+        // cout << leading_bit_pos << endl;
+        int mask = ~((1 << (leading_bit_pos + 1)) - 1);
+        // cout << bitset<32>(mask) << endl;
+        return left & mask;
     }
 };
 
@@ -57,10 +56,15 @@ int main()
     string s1 = "";
     string t1 = "";
     cout << solver.rangeBitwiseAnd(5, 7) << endl;
+    cout << "-------" << endl;
     cout << solver.rangeBitwiseAnd(0, 0) << endl;
+    cout << "-------" << endl;
     cout << solver.rangeBitwiseAnd(0, 1) << endl;
+    cout << "-------" << endl;
     cout << solver.rangeBitwiseAnd(1, 2147483647) << endl;
-    cout << solver.rangeBitwiseAnd(2<<31)-1,(2<<16)-1)<< endl;
+    cout << "-------" << endl;
+    cout << solver.rangeBitwiseAnd((2 << 31) - 1, (2 << 16) - 1) << endl;
+    cout << "-------" << endl;
     return 0;
 }
 
