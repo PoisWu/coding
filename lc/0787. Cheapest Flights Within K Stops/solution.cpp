@@ -34,44 +34,32 @@ public:
                           int dst,
                           int k)
     {
-        vector<int> dist(n, 1000000);
-        dist[src] = 0;
-        vector<vector<int>> dist_matrix(n, vector<int>(n, 1000000));
-        for (int i = 0; i < n; i++) {
-            dist_matrix[i][i] = 0;
-        }
-        for (auto flight : flights) {
-            dist_matrix[flight[0]][flight[1]] = flight[2];
-        }
-        vector<bool> isDone(n, false);
-        vector<int> pre(n, -1);
+        vector<vector<int>> dp(k + 2, vector<int>(n, 100 * 10000));
+        dp[0][src] = 0;
 
-        for (int i = 0; i < n; i++) {
-            // find the smallest, not done yet;
-            int lowest_price = 1000000;
-            int tmp = src;
-            for (int j = 0; j < n; j++) {
-                if (dist[j] < lowest_price && !isDone[j]) {
-                    lowest_price = dist[j];
-                    tmp = j;
-                }
-            }
-            isDone[tmp] = true;
-            for (int j = 0; j < n; j++) {
-                if (!isDone[j]) {
-                    if (dist[tmp] + dist_matrix[tmp][j] < dist[j]) {
-                        pre[j] =
-                            min(tmp; dist[j] = dist[tmp] + dist_matrix[tmp][j]);
-                    }
+        vector<vector<int>> price_table(n, vector<int>(n, 100 * 10000));
+        for (auto flight : flights) {
+            price_table[flight[0]][flight[1]] = flight[2];
+        }
+
+        for (int round = 1; round <= k + 1; round++) {
+            for (int city = 0; city < n; city++) {
+                for (int from_city = 0; from_city < n; from_city++) {
+                    dp[round][city] =
+                        min(dp[round][city], dp[round - 1][from_city] +
+                                                 price_table[from_city][city]);
                 }
             }
         }
-        if (dist[dst] != 1000000) {
-            return dist[dst];
-        } else {
+        int res = 100 * 10000;
+        for (int round = 0; round < k + 2; round++) {
+            res = min(dp[round][dst], res);
+        }
+        if (res == 100 * 10000) {
             return -1;
+        } else {
+            return res;
         }
-        return 0;
     }
 };
 
@@ -89,7 +77,7 @@ int main()
     v2.push_back({0, 2, 5});
     v2.push_back({1, 2, 1});
     v2.push_back({2, 3, 1});
-    // cout << solver.findCheapestPrice(4,v1,0,3,1) << endl;
+    cout << solver.findCheapestPrice(4, v1, 0, 3, 1) << endl;
     cout << solver.findCheapestPrice(4, v2, 0, 3, 1) << endl;
     return 0;
 }
