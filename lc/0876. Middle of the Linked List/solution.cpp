@@ -24,22 +24,32 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    ListNode *middleNode(ListNode *head) {}
+    ListNode *middleNode(ListNode *head)
+    {
+        if (!head) {
+            return head;
+        }
+        ListNode *slow = head;
+        ListNode *fast = head;
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        if (fast->next) {
+            slow = slow->next;
+        }
+        return slow;
+    }
 };
 
 int main()
 {
     Solution solver;
     vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
-    return 0;
+    string s2 = "";
+    string t3 = "";
+    return 1;
 }
 
 template <typename T>
