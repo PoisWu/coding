@@ -1,29 +1,21 @@
 #include <algorithm>
 #include <array>
 #include <bitset>
+#include <climits>
 #include <iostream>
 #include <map>
 #include <queue>
 #include <set>
 #include <stack>
 #include <string>
+#include <tuple>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right)
-        : val(x), left(left), right(right)
-    {
-    }
-};
 
 using namespace std;
+using lli = long long int;
 
 template <typename T>
 void print_2d_vector(vector<vector<T> > vvec);
@@ -38,61 +30,54 @@ private:
 public:
     string minWindow(string s, string t)
     {
-        if (s.length() < t.length()) {
-            return "";
+        int m = s.length();
+        int n = t.length();
+        unordered_map<char, int> fq;
+        for (int i = 0; i < n; i++) {
+            fq[t[i]]--;
         }
-        int start = 0;
+        int nb_c = fq.size();
+        int minLength = m + 1;
         int _start;
-        int minWindow = s.length() + 1;
-        unordered_map<char, int> freq;
-        for (int i = 0; i < t.length(); i++) {
-            freq[t[i]]++;
-        }
-        for (int end = 0; end < s.length(); end++) {
-            char c = s[end];
-            if (freq.find(c) != freq.end()) {
-                freq[c]--;
-                // advance start;
-                bool isempty = true;
-                for (auto &x : freq) {
-                    if (x.second > 0) {
-                        isempty = false;
-                        break;
-                    }
+        int j = -1;
+        // (j, i]
+        for (int i = 0; i < m; i++) {
+            if (fq.find(s[i]) != fq.end()) {
+                if ((++fq[s[i]]) == 0) {
+                    nb_c--;
                 }
-                while (isempty) {
-                    if (minWindow > (end - start + 1)) {
-                        minWindow = end - start + 1;
-                        _start = start;
+                while (nb_c == 0) {
+                    if (minLength > i - j) {
+                        minLength = i - j;
+                        _start = j + 1;
                     }
-                    char cs = s[start];
-                    if (freq.find(cs) != freq.end()) {
-                        freq[cs]++;
-                        if (freq[cs] > 0) {
-                            isempty = false;
+                    j++;
+                    if (fq.find(s[j]) != fq.end()) {
+                        if (--fq[s[j]] < 0) {
+                            nb_c++;
                         }
                     }
-                    start++;
                 }
             }
         }
-        if (minWindow < s.length() + 1) {
-            return s.substr(_start, minWindow);
-        } else {
-            return "";
-        }
+
+        return minLength == m + 1 ? "" : s.substr(_start, minLength);
     }
 };
 
 int main()
 {
     Solution solver;
+    vector<int> v1 = {};
     string s1 = "ADOBECODEBANC";
     string t1 = "ABC";
-    string s3 = "aa";
-    string t3 = "aa";
-    cout << solver.minWindow(s3, t3) << endl;
     cout << solver.minWindow(s1, t1) << endl;
+    string s2 = "";
+    string t2 = "ABC";
+    cout << solver.minWindow(s2, t2) << endl;
+    string s3 = "ABC";
+    string t3 = "ABC";
+    cout << solver.minWindow(s3, t3) << endl;
     return 0;
 }
 
