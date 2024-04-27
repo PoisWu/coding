@@ -18,7 +18,7 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
@@ -28,32 +28,33 @@ private:
     static const int mod = 1000000007;
 
 public:
-    void rotate(vector<vector<int>> &matrix)
+    int maxSubArray(vector<int> &nums)
     {
-        int n = matrix.size();
-        // Transpose
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                swap(matrix[i][j], matrix[j][i]);
-            }
+        int n = nums.size();
+        if (n <= 1) {
+            return nums[0];
         }
+        vector<int> dp(n, -1);
+        dp[0] = nums[0];
+        int res = dp[0];
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n / 2; j++) {
-                swap(matrix[i][j], matrix[i][n - 1 - j]);
+        for (int i = 1; i < n; i++) {
+            if (dp[i - 1] < 0) {
+                dp[i] = nums[i];
+            } else {
+                dp[i] = dp[i - 1] + nums[i];
             }
+            res = max(dp[i], res);
         }
+        return res;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<int> v1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    cout << solver.maxSubArray(v1) << endl;
     return 0;
 }
 
@@ -67,7 +68,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

@@ -27,33 +27,45 @@ class Solution
 private:
     static const int mod = 1000000007;
 
-public:
-    void rotate(vector<vector<int>> &matrix)
+    static bool cmp(vector<int> first, vector<int> second)
     {
-        int n = matrix.size();
-        // Transpose
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                swap(matrix[i][j], matrix[j][i]);
-            }
-        }
+        return first[0] < second[0];
+    }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n / 2; j++) {
-                swap(matrix[i][j], matrix[i][n - 1 - j]);
+public:
+    vector<vector<int>> merge(vector<vector<int>> &intervals)
+    {
+        //[a1, b1] , [a2, b2] overlap if
+        // suppose a1 <= a2
+        // a1 <= a2 <= b1<= b2
+        // Interval sorted,
+        // I1
+        sort(intervals.begin(), intervals.end(), cmp);
+        vector<vector<int>> res;
+        int i = 0;
+        int n = intervals.size();
+        while (i < n) {
+            int a = intervals[i][0];
+            int b = intervals[i][1];
+            while (i < n && intervals[i][0] <= b) {
+                b = max(b, intervals[i][1]);
+                i++;
             }
+            res.push_back({a, b});
         }
+        return res;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<vector<int>> v1 = {};
+    v1.push_back({1, 3});
+    v1.push_back({2, 6});
+    v1.push_back({8, 10});
+    v1.push_back({15, 18});
+    print_2d_vector(solver.merge(v1));
     return 0;
 }
 
