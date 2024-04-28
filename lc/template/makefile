@@ -1,6 +1,6 @@
 CXX      := g++
 # CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror
-CXXFLAGS := -Wall -Wextra -g
+CXXFLAGS := -Wall -Wextra -g -fsanitize=address
 SRC      := solution.cpp 
 
 

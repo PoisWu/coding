@@ -24,35 +24,39 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
-    bool hasCycle(ListNode *head)
+    int longestConsecutive(vector<int> &nums)
     {
-        if (head == NULL) {
-            return false;
+        unordered_set<int> set;
+        for (auto x : nums) {
+            set.insert(x);
         }
-
-        ListNode *slow = head;
-        ListNode *fast = head;
-
-        do {
-            if (fast->next == NULL || fast->next->next == NULL) {
-                return false;
+        int rets = 0;
+        for (auto x : nums) {
+            if (set.find(x - 1) == set.end()) {
+                int k = x;
+                int l = 0;
+                while (set.find(k) != set.end()) {
+                    k++;
+                    l++;
+                }
+                rets = max(rets, l);
             }
-            slow = slow->next;
-            fast = fast->next->next;
-        } while (slow != fast);
-        return true;
+        }
+        return rets;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<int> v1 = {100, 4, 200, 1, 3, 2};
+    vector<int> v2 = {0, 3, 7, 2, 5, 8, 4, 6, 0, 1};
+    cout << solver.longestConsecutive(v1) << endl;
+    cout << solver.longestConsecutive(v2) << endl;
     return 0;
 }
 

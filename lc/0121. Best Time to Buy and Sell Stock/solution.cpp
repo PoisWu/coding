@@ -25,23 +25,15 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    bool hasCycle(ListNode *head)
+    int maxProfit(vector<int> &prices)
     {
-        if (head == NULL) {
-            return false;
+        int min_val = prices[0];
+        int profit = 0;
+        for (int i = 0; i < prices.size(); i++) {
+            min_val = min(min_val, prices[i]);
+            profit = max(prices[i] - min_val, profit);
         }
-
-        ListNode *slow = head;
-        ListNode *fast = head;
-
-        do {
-            if (fast->next == NULL || fast->next->next == NULL) {
-                return false;
-            }
-            slow = slow->next;
-            fast = fast->next->next;
-        } while (slow != fast);
-        return true;
+        return profit;
     }
 };
 

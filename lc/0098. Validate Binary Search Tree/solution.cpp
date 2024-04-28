@@ -22,26 +22,40 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right)
+        : val(x), left(left), right(right)
+    {
+    }
+};
+
+
 class Solution
 {
-public:
-    bool hasCycle(ListNode *head)
+private:
+    static const int mod = 1000000007;
+
+    bool isValidBST(TreeNode *root, int *min_val, int *max_val)
     {
-        if (head == NULL) {
+        if (!root)
+            return true;
+        if (min_val && root->val <= *min_val)
             return false;
-        }
+        if (max_val && root->val >= *max_val)
+            return false;
+        return isValidBST(root->left, min_val, &root->val) &&
+               isValidBST(root->right, &root->val, max_val);
+    }
 
-        ListNode *slow = head;
-        ListNode *fast = head;
-
-        do {
-            if (fast->next == NULL || fast->next->next == NULL) {
-                return false;
-            }
-            slow = slow->next;
-            fast = fast->next->next;
-        } while (slow != fast);
-        return true;
+public:
+    bool isValidBST(TreeNode *root)
+    {
+        return isValidBST(root, nullptr, nullptr);
     }
 };
 
@@ -51,8 +65,6 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
     return 0;
 }
 

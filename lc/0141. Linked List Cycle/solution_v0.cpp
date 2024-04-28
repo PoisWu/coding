@@ -22,26 +22,36 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL){};
+};
+
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     bool hasCycle(ListNode *head)
     {
-        if (head == NULL) {
+        if (!head) {
             return false;
         }
-
         ListNode *slow = head;
         ListNode *fast = head;
-
+        bool hascycle = true;
         do {
-            if (fast->next == NULL || fast->next->next == NULL) {
-                return false;
+            if (fast->next && fast->next->next) {
+                fast = fast->next->next;
+                slow = slow->next;
+            } else {
+                hascycle = false;
+                break;
             }
-            slow = slow->next;
-            fast = fast->next->next;
         } while (slow != fast);
-        return true;
+        return hascycle;
     }
 };
 
@@ -51,8 +61,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    // cout << solver.<< endl;
+    // print_vector(solver.);
     return 0;
 }
 

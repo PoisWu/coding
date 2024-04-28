@@ -24,24 +24,15 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
-    bool hasCycle(ListNode *head)
+    int maxDepth(TreeNode *root)
     {
-        if (head == NULL) {
-            return false;
-        }
-
-        ListNode *slow = head;
-        ListNode *fast = head;
-
-        do {
-            if (fast->next == NULL || fast->next->next == NULL) {
-                return false;
-            }
-            slow = slow->next;
-            fast = fast->next->next;
-        } while (slow != fast);
-        return true;
+        if (!root)
+            return 0;
+        return 1 + max(maxDepth(root->left), maxDepth(root->right));
     }
 };
 

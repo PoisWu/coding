@@ -43,16 +43,38 @@ private:
 public:
     bool isSameTree(TreeNode *p, TreeNode *q)
     {
-        if (!p && !q) {
-            return true;
+        queue<TreeNode *> bufp;
+        queue<TreeNode *> bufq;
+        bufp.push(p);
+        bufq.push(q);
+        while (!bufp.empty()) {
+            if (bufq.empty()) {
+                return false;
+            }
+            TreeNode *nodep = bufp.front();
+            TreeNode *nodeq = bufq.front();
+            bufp.pop();
+            bufq.pop();
+            if (nodep == NULL || nodeq == NULL) {
+                if (nodep != NULL)
+                    return false;
+                if (nodeq != NULL)
+                    return false;
+            } else {
+                if (nodep->val != nodeq->val) {
+                    return false;
+                } else {
+                    bufp.push(nodep->left);
+                    bufp.push(nodep->right);
+                    bufq.push(nodeq->left);
+                    bufq.push(nodeq->right);
+                }
+            }
         }
-        if (!p != !q) {
+        if (!bufq.empty()) {
             return false;
         }
-        if (p->val != q->val) {
-            return false;
-        }
-        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+        return true;
     }
 };
 
@@ -62,6 +84,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
+    // cout << solver.<< endl;
+    // print_vector(solver.);
     return 0;
 }
 

@@ -22,26 +22,47 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
-class Solution
+class Node
 {
 public:
-    bool hasCycle(ListNode *head)
+    int val;
+    vector<Node *> neighbors;
+    Node()
     {
-        if (head == NULL) {
-            return false;
-        }
+        val = 0;
+        neighbors = vector<Node *>();
+    }
+    Node(int _val)
+    {
+        val = _val;
+        neighbors = vector<Node *>();
+    }
+    Node(int _val, vector<Node *> _neighbors)
+    {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
 
-        ListNode *slow = head;
-        ListNode *fast = head;
+class Solution
+{
+private:
+    static const int mod = 1000000007;
+    unordered_map<Node *, Node *> map;
 
-        do {
-            if (fast->next == NULL || fast->next->next == NULL) {
-                return false;
+public:
+    Node *cloneGraph(Node *node)
+    {
+        Node *newNode = new Node(node->val);
+        map[node] = newNode;
+        for (auto nextNode : node->neighbors) {
+            if (map.find(nextNode) != map.end()) {
+                newNode->neighbors.push_back(map[nextNode]);
+            } else {
+                newNode->neighbors.push_back(cloneGraph(nextNode));
             }
-            slow = slow->next;
-            fast = fast->next->next;
-        } while (slow != fast);
-        return true;
+        }
+        return newNode;
     }
 };
 

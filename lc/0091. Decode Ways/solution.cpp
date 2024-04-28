@@ -22,46 +22,60 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-    TreeNode(int x, TreeNode *left, TreeNode *right)
-        : val(x), left(left), right(right)
-    {
-    }
-};
-
-
 class Solution
 {
 private:
     static const int mod = 1000000007;
 
 public:
-    bool isSameTree(TreeNode *p, TreeNode *q)
+    // recurence
+    // X X X X X X
+    // return numDecodings(s[pos:])
+    int ways(string s)
     {
-        if (!p && !q) {
-            return true;
+        if (s.length() == 0)
+            return 1;
+        if (s[0] == '0')
+            return 0;
+        if (s.length() == 1)
+            return 1;
+
+        if (way.find(s) != way.end()) {
+            return way[s];
         }
-        if (!p != !q) {
-            return false;
+
+        int w = ways(s.substr(1, s.length()));
+
+        int num = stoi(s.substr(0, 2));
+
+        if (num <= 26) {
+            w += ways(s.substr(2, s.length()));
         }
-        if (p->val != q->val) {
-            return false;
-        }
-        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+
+        way[s] = w;
+        return w;
     }
+    int numDecodings(string s)
+    {
+        if (s.length() == 0)
+            return 0;
+        return ways(s);
+    }
+    unordered_map<string, int> way;
 };
 
 int main()
 {
     Solution solver;
     vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
+    string s1 = "11106";
+    string s2 = "12";
+    string s3 = "";
+    string s4 = "12111211";
+    cout << solver.numDecodings(s1) << endl;
+    cout << solver.numDecodings(s2) << endl;
+    cout << solver.numDecodings(s3) << endl;
+    cout << solver.numDecodings(s4) << endl;
     return 0;
 }
 

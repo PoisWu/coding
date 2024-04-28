@@ -18,7 +18,7 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec);
+void print_2d_vector(vector<vector<T>> vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
@@ -34,25 +34,36 @@ struct TreeNode {
     }
 };
 
-
 class Solution
 {
 private:
     static const int mod = 1000000007;
 
 public:
-    bool isSameTree(TreeNode *p, TreeNode *q)
+    vector<vector<int>> levelOrder(TreeNode *root)
     {
-        if (!p && !q) {
-            return true;
+        if (!root) {
+            return {};
         }
-        if (!p != !q) {
-            return false;
+        queue<TreeNode *> fifo;
+        fifo.push(root);
+        vector<vector<int>> rets;
+        while (!fifo.empty()) {
+            int n = fifo.size();
+            vector<int> tmp;
+            for (int i = 0; i < n; i++) {
+                TreeNode *node = fifo.front();
+                fifo.pop();
+                if (!node)
+                    continue;
+                tmp.push_back(node->val);
+                fifo.push(node->left);
+                fifo.push(node->right);
+            }
+            if (!tmp.empty())
+                rets.push_back(tmp);
         }
-        if (p->val != q->val) {
-            return false;
-        }
-        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+        return rets;
     }
 };
 
@@ -75,7 +86,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec)
+void print_2d_vector(vector<vector<T>> vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

@@ -25,23 +25,18 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    bool hasCycle(ListNode *head)
+    ListNode *reverseList(ListNode *head)
     {
-        if (head == NULL) {
-            return false;
+        ListNode *pre = NULL;
+        ListNode *cur = head;
+        ListNode *nxt;
+        while (cur) {
+            nxt = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = nxt;
         }
-
-        ListNode *slow = head;
-        ListNode *fast = head;
-
-        do {
-            if (fast->next == NULL || fast->next->next == NULL) {
-                return false;
-            }
-            slow = slow->next;
-            fast = fast->next->next;
-        } while (slow != fast);
-        return true;
+        return pre;
     }
 };
 
