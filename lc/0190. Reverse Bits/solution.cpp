@@ -25,42 +25,27 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    int rob(vector<int> &nums)
+    uint32_t reverseBits(uint32_t n)
     {
-        int n = nums.size();
-        if (n == 1) {
-            return nums[0];
+        for (int i = 0; i < 16; i++) {
+            int leftbit = 1 & (n >> (31 - i));
+            int rightbit = 1 & (n >> i);
+            int maskleft = ~(1 << (31 - i));
+            int maskright = ~(1 << i);
+            n = ((n & maskleft) & maskright) ^ (leftbit << i) ^
+                (rightbit << (31 - i));
         }
-        if (n == 2) {
-            return max(nums[0], nums[1]);
-        }
-        if (n == 3) {
-            return max(nums[0] + nums[2], nums[1]);
-        }
-
-
-        vector<int> dp(n, 0);
-        dp[0] = nums[0];
-        dp[1] = nums[1];
-        dp[2] = nums[2] + dp[0];
-
-        int rets = max(dp[2], dp[1]);
-
-        for (int i = 3; i < n; i++) {
-            dp[i] = nums[i] + max(dp[i - 2], dp[i - 3]);
-            rets = max(rets, dp[i]);
-        }
-        return rets;
+        return n;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {2, 7, 9, 3, 1};
-    vector<int> v2 = {100, 1, 1, 100};
-    cout << solver.rob(v1) << endl;
-    cout << solver.rob(v2) << endl;
+    uint32_t n1 = 0;
+    uint32_t n2 = 1;
+    cout << solver.reverseBits(n1) << endl;
+    cout << solver.reverseBits(n2) << endl;
     return 0;
 }
 
