@@ -22,33 +22,36 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
-class Solution
-{
-private:
-    static const int mod = 1000000007;
 
-public:
-    int missingNumber(vector<int> &nums)
-    {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
-            }
-        }
-        return n;
-    }
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+class Solution
+{
+public:
+    TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+    {
+        if (root == NULL)
+            return NULL;
+        if (p->val > q->val) {
+            swap(p, q);
+        }
+        if (root->val < p->val) {
+            return lowestCommonAncestor(root->right, p, q);
+        } else if (root->val > q->val) {
+            return lowestCommonAncestor(root->left, p, q);
+        }
+        return root;
+    }
+};
 int main()
 {
     Solution solver;
     vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
     return 0;
 }
 

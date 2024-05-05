@@ -24,31 +24,43 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    vector<int> productExceptSelf(vector<int> &nums)
     {
-        sort(nums.begin(), nums.end());
         int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
-            }
+        if (n == 0) {
+            return {nums[0]};
         }
-        return n;
+
+        vector<int> ret(n, 0);
+        ret[0] = nums[0];
+        for (int i = 1; i < n; i++) {
+            // compute prefix
+            ret[i] = nums[i] * ret[i - 1];
+        }
+
+        // computing surfix
+        for (int i = n - 2; i >= 0; i--) {
+            nums[i] = nums[i + 1] * nums[i];
+        }
+
+        int pre = ret[0];
+        for (int i = 0; i < n; i++) {
+            int tmp = ret[i];
+            ret[i] = (i - 1 >= 0 ? pre : 1) * (i + 1 < n ? nums[i + 1] : 1);
+            pre = tmp;
+        }
+        return ret;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<int> v1 = {1, 2, 3, 4};
+    vector<int> v2 = {-1, 1, 0, -3, 3};
+    print_vector(solver.productExceptSelf(v1));
+    print_vector(solver.productExceptSelf(v2));
     return 0;
 }
 

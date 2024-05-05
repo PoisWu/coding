@@ -24,20 +24,18 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    bool containsDuplicate(vector<int> &nums)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
+        unordered_set<int> s;
+        for (int x : nums) {
+            if (s.find(x) != s.end()) {
+                return true;
             }
+
+            s.insert(x);
         }
-        return n;
+        return false;
     }
 };
 

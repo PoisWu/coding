@@ -32,49 +32,64 @@ private:
     public:
         Trie *next[26];
         bool isEnd;
+        int count;
         Trie()
         {
             for (int i = 0; i < 26; i++) {
                 next[i] = NULL;
             }
             isEnd = false;
+            count = 0;
         }
     };
-    vector<string> rets;
+    unordered_set<string> rets;
     int m;
     int n;
+    int isvisited[12][12];
+    Trie *root;
 
-    void dfs(vector<vector<char>> &board, int x, int y, string w, Trie *node)
+    void dfs(vector<vector<char>> &board, int i, int j, string &w, Trie *node)
     {
-        char c = board[x][y];
-        if (node->next[c - 'a'] == NULL) {
+        if (i < 0 || i >= m || j < 0 || j >= n || isvisited[i][j] == 1) {
             return;
         }
+        char c = board[i][j];
+        if (node->next[c - 'a'] == NULL)
+            return;
+        if (node->count == 0)
+            return;
+
+        isvisited[i][j] = 1;
+        w.push_back(c);
         node = node->next[c - 'a'];
-        w += c;
-
         if (node->isEnd) {
-            rets.push_back(w);
+            rets.insert(w);
+            node->isEnd = false;
+            rmword(w);
         }
-
-        if (x - 1 >= 0) {
-            dfs(board, x - 1, y, w, node);
-        }
-        if (x + 1 < m) {
-            dfs(board, x + 1, y, w, node);
-        }
-        if (y - 1 >= 0) {
-            dfs(board, x, y - 1, w, node);
-        }
-        if (y + 1 < n) {
-            dfs(board, x, y + 1, w, node);
-        }
+        dfs(board, i + 1, j, w, node);
+        dfs(board, i - 1, j, w, node);
+        dfs(board, i, j + 1, w, node);
+        dfs(board, i, j - 1, w, node);
+        isvisited[i][j] = 0;
+        w.pop_back();
     }
+
+    void rmword(string w)
+    {
+        Trie *node = root;
+        for (char c : w) {
+            node->count--;
+            node = node->next[c - 'a'];
+        }
+        node->count--;
+    }
+
 
 public:
     vector<string> findWords(vector<vector<char>> &board, vector<string> &words)
     {
-        Trie *root = new Trie();
+        root = new Trie();
 
         for (string word : words) {
             Trie *node = root;
@@ -82,18 +97,28 @@ public:
                 if (node->next[c - 'a'] == NULL) {
                     node->next[c - 'a'] = new Trie();
                 }
+                node->count++;
+                node = node->next[c - 'a'];
             }
             node->isEnd = true;
+            node->count++;
         }
-        rets.resize(0);
-        m = board.size();
-        n = board[0].size();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                dfs(board, i, j, "", root);
+        rets.clear();
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                isvisited[i][j] = 0;
             }
         }
-        return rets;
+
+        m = board.size();
+        n = board[0].size();
+        string w = "";
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                dfs(board, i, j, w, root);
+            }
+        }
+        return vector<string>(rets.begin(), rets.end());
     }
 };
 
@@ -105,7 +130,8 @@ int main()
     v1.push_back({'e', 't', 'a', 'e'});
     v1.push_back({'i', 'h', 'k', 'r'});
     v1.push_back({'i', 'f', 'l', 'v'});
-    vector<string> words = {"oath", "pea", "eat", "rain"};
+    // vector<string> words = {"oath", "pea", "eat", "rain"};
+    vector<string> words = {"oa", "oaa"};
     print_vector(solver.findWords(v1, words));
     return 0;
 }
