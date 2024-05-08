@@ -25,30 +25,28 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    int lengthOfLIS(vector<int> &nums)
+    int coinChange(vector<int> &coins, int amount)
     {
-        vector<int> q;
-        for (int x : nums) {
-            auto pos = lower_bound(q.begin(), q.end(), x);
-            if (pos == q.end()) {
-                q.push_back(x);
-            } else {
-                *pos = x;
+        vector<int> dp(amount + 1, INT_MAX / 2);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (auto coin : coins) {
+                if (coin <= i) {
+                    dp[i] = min(dp[i], 1 + dp[i - coin]);
+                }
             }
         }
-        return q.size();
+        return dp[amount] == INT_MAX / 2 ? -1 : dp[amount];
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {7, 7, 7, 7, 7, 7, 7};
-    vector<int> v2 = {0, 1, 0, 3, 2, 3};
-    vector<int> v3 = {10, 9, 2, 5, 3, 7, 101, 18};
-    cout << solver.lengthOfLIS(v1) << endl;
-    cout << solver.lengthOfLIS(v2) << endl;
-    cout << solver.lengthOfLIS(v3) << endl;
+    vector<int> v1 = {1, 2, 5};
+    cout << solver.coinChange(v1, 11) << endl;
+    vector<int> v2 = {2};
+    cout << solver.coinChange(v2, 3) << endl;
     return 0;
 }
 

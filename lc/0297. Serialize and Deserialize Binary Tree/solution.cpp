@@ -42,7 +42,7 @@ public:
     string serialize(TreeNode *root)
     {
         queue<TreeNode *> fifo;
-        vector<string> rets;
+        string rets;
         fifo.push(root);
 
         while (!fifo.empty()) {
@@ -50,21 +50,15 @@ public:
                 TreeNode *node = fifo.front();
                 fifo.pop();
                 if (node == NULL) {
-                    rets.push_back("NULL");
+                    rets += "#,";
                 } else {
-                    rets.push_back(to_string(node->val));
+                    rets += to_string(node->val) + ",";
                     fifo.push(node->left);
                     fifo.push(node->right);
                 }
             }
         }
-        string ret = "";
-        for (string s : rets) {
-            ret = ret + s;
-            ret.push_back(',');
-        }
-        ret.pop_back();
-        return ret;
+        return rets;
     }
 
     // Decodes your encoded data to tree.
@@ -82,11 +76,10 @@ public:
                 v.push_back(data.substr(i, len));
                 i = i + len + 1;
             } else {
-                v.push_back("NULL");
-                i = i + 5;
+                v.push_back("#");
+                i = i + 2;
             }
         }
-        print_vector(v);
 
         queue<TreeNode *> fifo;
         if (v.size() == 1) {
@@ -102,14 +95,14 @@ public:
             TreeNode *node = fifo.front();
             fifo.pop();
 
-            if (v[i] == "NULL") {
+            if (v[i] == "#") {
                 node->left = NULL;
             } else {
                 node->left = new TreeNode(stoi(v[i]));
                 fifo.push(node->left);
             }
             i++;
-            if (v[i] == "NULL") {
+            if (v[i] == "#") {
                 node->right = NULL;
             } else {
                 node->right = new TreeNode(stoi(v[i]));

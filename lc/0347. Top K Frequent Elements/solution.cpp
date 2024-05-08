@@ -18,37 +18,42 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec);
+void print_2d_vector(vector<vector<T>> vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
-    int lengthOfLIS(vector<int> &nums)
+    vector<int> topKFrequent(vector<int> &nums, int k)
     {
-        vector<int> q;
+        unordered_map<int, int> map;
         for (int x : nums) {
-            auto pos = lower_bound(q.begin(), q.end(), x);
-            if (pos == q.end()) {
-                q.push_back(x);
-            } else {
-                *pos = x;
-            }
+            map[x]++;  // val, freq
         }
-        return q.size();
+        vector<pair<int, int>> q;
+
+        for (auto ele : map) {
+            q.emplace_back(ele.second, ele.first);
+        }
+        sort(q.begin(), q.end());
+        int n = q.size();
+        vector<int> ret;
+        for (int i = 0; i < k; i++) {
+            ret.push_back(q[n - 1 - i].second);
+        }
+        return ret;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {7, 7, 7, 7, 7, 7, 7};
-    vector<int> v2 = {0, 1, 0, 3, 2, 3};
-    vector<int> v3 = {10, 9, 2, 5, 3, 7, 101, 18};
-    cout << solver.lengthOfLIS(v1) << endl;
-    cout << solver.lengthOfLIS(v2) << endl;
-    cout << solver.lengthOfLIS(v3) << endl;
+    vector<int> v1 = {1, 1, 1, 2, 2, 3};
+    print_vector(solver.topKFrequent(v1, 2));
     return 0;
 }
 
@@ -62,7 +67,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec)
+void print_2d_vector(vector<vector<T>> vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

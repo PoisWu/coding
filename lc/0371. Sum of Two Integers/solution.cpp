@@ -25,30 +25,26 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    int lengthOfLIS(vector<int> &nums)
+    int getSum(int a, int b)
     {
-        vector<int> q;
-        for (int x : nums) {
-            auto pos = lower_bound(q.begin(), q.end(), x);
-            if (pos == q.end()) {
-                q.push_back(x);
-            } else {
-                *pos = x;
-            }
+        int tmp;
+        while (a & b) {
+            tmp = (a & b) << 1;
+            cout << tmp << endl;
+            a = a ^ b;
+            b = tmp;
         }
-        return q.size();
+        return a ^ b;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {7, 7, 7, 7, 7, 7, 7};
-    vector<int> v2 = {0, 1, 0, 3, 2, 3};
-    vector<int> v3 = {10, 9, 2, 5, 3, 7, 101, 18};
-    cout << solver.lengthOfLIS(v1) << endl;
-    cout << solver.lengthOfLIS(v2) << endl;
-    cout << solver.lengthOfLIS(v3) << endl;
+    vector<int> v1 = {};
+    string s1 = "";
+    string t1 = "";
+    cout << solver.getSum(3, 5) << endl;
     return 0;
 }
 

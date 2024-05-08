@@ -25,30 +25,33 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    int lengthOfLIS(vector<int> &nums)
+    vector<int> countBits(int n)
     {
-        vector<int> q;
-        for (int x : nums) {
-            auto pos = lower_bound(q.begin(), q.end(), x);
-            if (pos == q.end()) {
-                q.push_back(x);
-            } else {
-                *pos = x;
+        vector<int> ret = {0};
+        int bound = 1;
+        int cur = 0;
+        for (int i = 0; i < n; i++) {
+            ret.push_back(1 + ret[cur]);
+            cur++;
+            if (cur == bound) {
+                cur = 0;
+                bound = bound * 2;
             }
         }
-        return q.size();
+        return ret;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {7, 7, 7, 7, 7, 7, 7};
-    vector<int> v2 = {0, 1, 0, 3, 2, 3};
-    vector<int> v3 = {10, 9, 2, 5, 3, 7, 101, 18};
-    cout << solver.lengthOfLIS(v1) << endl;
-    cout << solver.lengthOfLIS(v2) << endl;
-    cout << solver.lengthOfLIS(v3) << endl;
+    vector<int> v1 = {};
+    string s1 = "";
+    string t1 = "";
+    print_vector(solver.countBits(3));
+    print_vector(solver.countBits(5));
+    print_vector(solver.countBits(8));
+    print_vector(solver.countBits(0));
     return 0;
 }
 
