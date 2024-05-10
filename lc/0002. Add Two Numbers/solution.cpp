@@ -24,24 +24,35 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-public:
-    int lengthOfLongestSubstring(string s)
+    ListNode *helper(ListNode *l1, ListNode *l2, int carry)
     {
-        vector<int> freq(256, 0);
-        int n = s.length();
-        int i = 0;
-        int ret = 0;
-        for (int j = 0; j < n; j++) {
-            freq[s[j]]++;
-            while (freq[s[j]] >= 2) {
-                freq[s[i]]--;
-                i++;
+        if (l1 == NULL || l2 == NULL) {
+            if (l1 == NULL && l2 == NULL) {
+                return carry ? new ListNode(1) : NULL;
             }
-            ret = max(ret, j - i + 1);
+
+            if (l1 == NULL) {
+                swap(l1, l2);
+            }
+            int v = l1->val + carry;
+            carry = v / 10;
+            l1->val = v % 10;
+            l1->next = helper(l1->next, l2, carry);
+            return l1;
         }
-        return ret;
+        int v = l1->val + l2->val + carry;
+        ListNode *node = new ListNode(v % 10);
+        node->next = helper(l1->next, l2->next, v / 10);
+        return node;
+    }
+
+public:
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
+    {
+        return helper(l1, l2, 0);
     }
 };
+
 
 int main()
 {
