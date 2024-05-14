@@ -24,30 +24,39 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
-    int maxArea(vector<int> heights)
+    bool isValid(string s)
     {
-        int left = 0;
-        int right = heights.size() - 1;
-        int ret = 0;
-        while (left < right) {
-            ret = max((right - left) * min(heights[left], heights[right]), ret);
-            if (heights[left] < heights[right]) {
-                left++;
+        vector<char> stack;
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
+                stack.push_back(s[i]);
             } else {
-                right--;
+                if (s[i] == ')' && stack.back() != '(')
+                    return false;
+                if (s[i] == '}' && stack.back() != '{')
+                    return false;
+                if (s[i] == ']' && stack.back() != '[')
+                    return false;
+                stack.pop_back();
             }
         }
-        return ret;
+        return true;
     }
 };
-
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    cout << solver.maxArea(v1) << endl;
+    vector<int> v1 = {};
+    string s1 = "";
+    string t1 = "";
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 }
 

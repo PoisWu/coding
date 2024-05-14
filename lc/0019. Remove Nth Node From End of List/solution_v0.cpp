@@ -21,6 +21,7 @@ template <typename T>
 void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
+
 struct ListNode {
     int val;
     ListNode *next;
@@ -31,31 +32,59 @@ struct ListNode {
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     ListNode *removeNthFromEnd(ListNode *head, int n)
     {
-        int l = 0;
-        ListNode *node = head;
-        while (node != NULL) {
-            l++;
-            node = node->next;
+        int length = 0;
+        ListNode *ptr = head;
+        while (ptr) {
+            length++;
+            ptr = ptr->next;
         }
-        ListNode **ptrNode = &head;
-        for (int i = 0; i < l - n; i++) {
-            ptrNode = &(*ptrNode->next);
+
+        ListNode **ppnode = &head;
+
+        // head
+
+        for (int i = 0; i < length - n; i++) {
+            ppnode = &((*ppnode)->next);
         }
-        *ptrNode = *ptrNode->next;
+
+        *ppnode = (*ppnode)->next;
+        //
+        // if (n == length){
+        //     return head -> next;
+        // }
+        // ptr = head;
+        // for (int i = 0; i<length-n-1; i++){
+        //     ptr = ptr -> next;
+        // }
+        // ptr -> next = ptr->next->next;
         return head;
     }
 };
 
+void print_listnode(ListNode *head)
+{
+    while (head) {
+        cout << head->val << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    return 0;
+    ListNode two = ListNode(2);
+    ListNode one = ListNode(1, &two);
+    print_listnode(solver.removeNthFromEnd(&one, 1));
+
+
+    return 1;
 }
 
 template <typename T>

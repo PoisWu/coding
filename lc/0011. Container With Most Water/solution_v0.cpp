@@ -24,24 +24,28 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
-    int maxArea(vector<int> heights)
+    int maxArea(vector<int> hights)
     {
-        int left = 0;
-        int right = heights.size() - 1;
-        int ret = 0;
-        while (left < right) {
-            ret = max((right - left) * min(heights[left], heights[right]), ret);
-            if (heights[left] < heights[right]) {
-                left++;
+        int s = 0;
+        int t = hights.size() - 1;
+        int res = 0;
+
+        while (s < t) {
+            // look interval of [s, t]
+            res = max(res, min(hights[t], hights[s]) * (t - s));
+            if (hights[t] < hights[s]) {
+                t--;
             } else {
-                right--;
+                s++;
             }
         }
-        return ret;
+        return res;
     }
 };
-
 
 int main()
 {

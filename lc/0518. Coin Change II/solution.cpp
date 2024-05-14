@@ -25,29 +25,28 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    int maxArea(vector<int> heights)
+    int change(int amount, vector<int> &coins)
     {
-        int left = 0;
-        int right = heights.size() - 1;
-        int ret = 0;
-        while (left < right) {
-            ret = max((right - left) * min(heights[left], heights[right]), ret);
-            if (heights[left] < heights[right]) {
-                left++;
-            } else {
-                right--;
+        vector<int> dp(amount + 1, 0);
+        dp[0] = 1;
+        for (int coin : coins) {
+            for (int i = 1; i <= amount; i++) {
+                if (i >= coin)
+                    dp[i] += dp[i - coin];
             }
         }
-        return ret;
+        return dp[amount];
     }
 };
-
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    cout << solver.maxArea(v1) << endl;
+    vector<int> v1 = {};
+    string s1 = "";
+    string t1 = "";
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 }
 

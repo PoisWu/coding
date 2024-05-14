@@ -24,28 +24,26 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
     bool isValid(string s)
     {
-        vector<char> stack;
+        stack<char> q;
         int n = s.length();
         for (int i = 0; i < n; i++) {
-            if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
-                stack.push_back(s[i]);
+            if (s[i] == '[') {
+                q.push(']');
+            } else if (s[i] == '{') {
+                q.push('}');
+            } else if (s[i] == '(') {
+                q.push('(');
             } else {
-                if (s[i] == ')' && stack.back() != '(')
+                char c = q.top();
+                q.pop();
+                if (c != s[i])
                     return false;
-                if (s[i] == '}' && stack.back() != '{')
-                    return false;
-                if (s[i] == ']' && stack.back() != '[')
-                    return false;
-                stack.pop_back();
             }
         }
-        return true;
+        return q.empty();
     }
 };
 

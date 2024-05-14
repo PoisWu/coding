@@ -24,47 +24,46 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     vector<vector<int>> threeSum(vector<int> &nums)
     {
         sort(nums.begin(), nums.end());
-        vector<vector<int>> ret;
         int n = nums.size();
-        // suppose nums[i] <= nums[j] <= nums[k]
+        vector<vector<int>> res;
         for (int i = 0; i < n; i++) {
-            if (i > 0 && nums[i] == nums[i - 1])
+            if (i && nums[i] == nums[i - 1])
                 continue;
             int j = i + 1;
             int k = n - 1;
+            int t = -nums[i];
             while (j < k) {
-                if (j - 1 >= i + 1 && nums[j] == nums[j - 1]) {
-                    j++;
-                    continue;
-                }
-                if (nums[i] + nums[j] + nums[k] == 0) {
-                    ret.push_back({nums[i], nums[j], nums[k]});
-                    j++;
-                    continue;
-                }
-                if (nums[i] + nums[j] + nums[k] > 0) {
+                if (nums[j] + nums[k] > t) {
                     k--;
-                }
-                if (nums[i] + nums[j] + nums[k] < 0) {
+                } else if (nums[j] + nums[k] < t) {
                     j++;
+                } else {
+                    res.push_back({nums[i], nums[j], nums[k]});
+                    while (j < k && nums[j] == nums[j + 1])
+                        j++;
+                    while (j < k && nums[k] == nums[k - 1])
+                        k--;
+                    j++;
+                    k--;
                 }
             }
         }
-        return ret;
+        return res;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {0, 0, 0};
-    vector<int> v2 = {-1, 0, 1, 2, -1, -4};
+    vector<int> v1 = {-1, 0, 1, 2, -1, -4};
     print_2d_vector(solver.threeSum(v1));
-    print_2d_vector(solver.threeSum(v2));
     return 0;
 }
 

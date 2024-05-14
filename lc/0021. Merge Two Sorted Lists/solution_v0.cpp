@@ -22,26 +22,49 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
     {
-        ListNode *head = NULL;
-        ListNode **ppnode = &head;
-        ListNode **node = NULL;
-        for (; list1 && list2; *node = (*node)->next) {
-            node = list1->val < list2->val ? &list1 : &list2;
-            (*ppnode) = *node;
-            ppnode = &(*ppnode)->next;
+        ListNode *p = NULL;
+        ListNode *res = p;
+        ListNode *p1 = list1;
+        ListNode *p2 = list2;
+
+        for (; p1 && p2;) {
+            if (p1->val > p2->val) {
+                if (!p) {
+                    p->next = p1;
+                } else {
+                    p = p1;
+                }
+                p1 = p1->next;
+            } else {
+                if (!p) {
+                    p->next = p2;
+                } else {
+                    p = p2;
+                }
+                p2 = p2->next;
+            }
         }
-        if (list1) {
-            *ppnode = list1;
-        }
-        if (list2) {
-            *ppnode = list2;
-        }
-        return head;
+        if (p1)
+            p->next = p1;
+        if (p2)
+            p->next = p2;
+        return res;
     }
 };
 

@@ -24,30 +24,42 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+    vector<string> ret;
+    vector<string> l = {"",    "",    "abc",  "def", "ghi",
+                        "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
 public:
-    int maxArea(vector<int> heights)
+    vector<string> letterCombinations(string digits)
     {
-        int left = 0;
-        int right = heights.size() - 1;
-        int ret = 0;
-        while (left < right) {
-            ret = max((right - left) * min(heights[left], heights[right]), ret);
-            if (heights[left] < heights[right]) {
-                left++;
-            } else {
-                right--;
-            }
+        if (digits.length() == 0) {
+            return {};
         }
+        ret.clear();
+        string w = "";
+        dfs(digits, 0, w);
         return ret;
     }
+    void dfs(string digits, int pos, string &w)
+    {
+        if (pos == digits.length()) {
+            ret.push_back(w);
+            return;
+        }
+        for (char c : l[digits[pos] - '0']) {
+            w.push_back(c);
+            dfs(digits, pos + 1, w);
+            w.pop_back();
+        }
+    }
 };
-
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    cout << solver.maxArea(v1) << endl;
+    vector<int> v1 = {};
+    string s1 = "";
+    string t1 = "";
+    print_vector(solver.letterCombinations("23"));
     return 0;
 }
 

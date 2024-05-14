@@ -25,29 +25,31 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    int maxArea(vector<int> heights)
+    int reverse(int x)
     {
-        int left = 0;
-        int right = heights.size() - 1;
         int ret = 0;
-        while (left < right) {
-            ret = max((right - left) * min(heights[left], heights[right]), ret);
-            if (heights[left] < heights[right]) {
-                left++;
-            } else {
-                right--;
+        while (x != 0) {
+            int tail = x % 10;
+            int newret = ret * 10 + tail;
+
+            if (newret / 10 != ret) {
+                return 0;
             }
+            ret = newret;
+            x /= 10;
         }
         return ret;
     }
 };
 
-
 int main()
 {
     Solution solver;
-    vector<int> v1 = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    cout << solver.maxArea(v1) << endl;
+    vector<int> v1 = {};
+    string s1 = "";
+    string t1 = "";
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 }
 

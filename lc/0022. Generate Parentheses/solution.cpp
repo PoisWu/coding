@@ -24,21 +24,32 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+    vector<string> ret;
+
 public:
-    int maxArea(vector<int> heights)
+    vector<string> generateParenthesis(int n)
     {
-        int left = 0;
-        int right = heights.size() - 1;
-        int ret = 0;
-        while (left < right) {
-            ret = max((right - left) * min(heights[left], heights[right]), ret);
-            if (heights[left] < heights[right]) {
-                left++;
-            } else {
-                right--;
-            }
-        }
+        ret.clear();
+        string w = "";
+        dfs(w, n, 0);
         return ret;
+    }
+    void dfs(string &w, int nb_not_put, int nb_unpair)
+    {
+        if (nb_unpair == 0 && nb_not_put == 0) {
+            ret.push_back(w);
+        }
+
+        if (nb_not_put != 0) {
+            w.push_back('(');
+            dfs(w, nb_not_put - 1, nb_unpair + 1);
+            w.pop_back();
+        }
+        if (nb_unpair != 0) {
+            w.push_back(')');
+            dfs(w, nb_not_put, nb_unpair - 1);
+            w.pop_back();
+        }
     }
 };
 
@@ -46,8 +57,7 @@ public:
 int main()
 {
     Solution solver;
-    vector<int> v1 = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    cout << solver.maxArea(v1) << endl;
+    print_vector(solver.generateParenthesis(3));
     return 0;
 }
 

@@ -24,30 +24,36 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+    int ret;
+
 public:
-    int maxArea(vector<int> heights)
+    int goodNodes(TreeNode *root)
     {
-        int left = 0;
-        int right = heights.size() - 1;
-        int ret = 0;
-        while (left < right) {
-            ret = max((right - left) * min(heights[left], heights[right]), ret);
-            if (heights[left] < heights[right]) {
-                left++;
-            } else {
-                right--;
-            }
-        }
+        ret = 0;
+        dfs(root, INT_MIN);
         return ret;
     }
+    void dfs(TreeNode *node, int M)
+    {
+        if (node == NULL)
+            return;
+        if (node->val >= M) {
+            ret++;
+        }
+        M = max(node->val, M);
+        dfs(node->right, M);
+        dfs(node->left, M);
+    }
 };
-
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    cout << solver.maxArea(v1) << endl;
+    vector<int> v1 = {};
+    string s1 = "";
+    string t1 = "";
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 }
 
