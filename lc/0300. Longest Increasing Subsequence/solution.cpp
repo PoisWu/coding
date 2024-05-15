@@ -1,35 +1,73 @@
-/**
- * Creater: Nonamefour
- * Creat data:2021-07-09
- * Purpose:leet 300.Longest increasing Subswquence
- *
- * End data:07-09
- * Runtime:99.07%
- * Memory Usage:60.30%
- *		key word: Patience sorting
- *		rf: https://www.youtube.com/watch?v=l2rCz7skAlk&ab_channel=HuaHua
- */
-
 #include <algorithm>
+#include <array>
+#include <bitset>
+#include <climits>
 #include <iostream>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <tuple>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
-using namespace std;
 
-int lengthOfLIS(vector<int> &v)
+using namespace std;
+using lli = long long int;
+
+template <typename T>
+void print_2d_vector(vector<vector<T> > vvec);
+template <typename T>
+void print_vector(vector<T> vec);
+
+class Solution
 {
-    vector<int> dp;
-    for (int x : v) {
-        auto it = lower_bound(begin(dp), end(dp), x);
-        if (it == end(dp))
-            dp.push_back(x);
-        else
-            *it = x;
+public:
+    int lengthOfLIS(vector<int> &nums)
+    {
+        vector<int> q;
+        for (int x : nums) {
+            auto pos = lower_bound(q.begin(), q.end(), x);
+            if (pos == q.end()) {
+                q.push_back(x);
+            } else {
+                *pos = x;
+            }
+        }
+        return q.size();
     }
-    return dp.size();
-}
+};
 
 int main()
 {
+    Solution solver;
+    vector<int> v1 = {7, 7, 7, 7, 7, 7, 7};
+    vector<int> v2 = {0, 1, 0, 3, 2, 3};
+    vector<int> v3 = {10, 9, 2, 5, 3, 7, 101, 18};
+    cout << solver.lengthOfLIS(v1) << endl;
+    cout << solver.lengthOfLIS(v2) << endl;
+    cout << solver.lengthOfLIS(v3) << endl;
     return 0;
+}
+
+template <typename T>
+void print_vector(vector<T> vec)
+{
+    for (auto e : vec) {
+        cout << e << " ";
+    }
+    cout << endl;
+}
+
+template <typename T>
+void print_2d_vector(vector<vector<T> > vvec)
+{
+    for (auto vec : vvec) {
+        for (auto e : vec) {
+            cout << e << " ";
+        }
+        cout << endl;
+    }
 }

@@ -24,31 +24,32 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    int characterReplacement(string s, int k)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
+        vector<int> count(26, 0);
+        int n = s.length();
+        int i = 0;
+        int ret = 0;
+
+        for (int j = 0; j < n; j++) {
+            count[s[j] - 'A']++;
+            while (j - i + 1 - *max_element(count.begin(), count.end()) > k) {
+                count[s[i] - 'A']--;
+                i++;
             }
+            ret = max(ret, j - i + 1);
         }
-        return n;
+        return ret;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
+    string s1 = "ABAB";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    cout << solver.characterReplacement(s1, 2) << endl;
     return 0;
 }
 

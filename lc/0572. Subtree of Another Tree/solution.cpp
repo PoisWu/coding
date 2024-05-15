@@ -24,20 +24,27 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
+    bool equalTree(TreeNode *a, TreeNode *b)
+    {
+        if (a == NULL || b == NULL) {
+            return a == b;
+        }
+
+        return a->val == b->val && equalTree(a->left, b->left) &&
+               equalTree(a->right, b->right);
+    }
 
 public:
-    int missingNumber(vector<int> &nums)
+    bool isSubtree(TreeNode *root, TreeNode *subRoot)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
-            }
+        if (equalTree(root, subRoot))
+            return true;
+
+        if (root == NULL) {
+            return subRoot == NULL;
         }
-        return n;
+        return isSubtree(root->left, subRoot) ||
+               isSubtree(root->right, subRoot);
     }
 };
 

@@ -24,22 +24,15 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    bool isAnagram(string s, string t)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
-            }
-        }
-        return n;
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
+        return s == t;
     }
 };
+
 
 int main()
 {

@@ -18,7 +18,7 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec);
+void print_2d_vector(vector<vector<T>> vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
@@ -28,27 +28,32 @@ private:
     static const int mod = 1000000007;
 
 public:
-    int missingNumber(vector<int> &nums)
+    vector<int> topKFrequent(vector<int> &nums, int k)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
-            }
+        unordered_map<int, int> map;
+        for (int x : nums) {
+            map[x]++;  // val, freq
         }
-        return n;
+        vector<pair<int, int>> q;
+
+        for (auto ele : map) {
+            q.emplace_back(ele.second, ele.first);
+        }
+        sort(q.begin(), q.end());
+        int n = q.size();
+        vector<int> ret;
+        for (int i = 0; i < k; i++) {
+            ret.push_back(q[n - 1 - i].second);
+        }
+        return ret;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<int> v1 = {1, 1, 1, 2, 2, 3};
+    print_vector(solver.topKFrequent(v1, 2));
     return 0;
 }
 
@@ -62,7 +67,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec)
+void print_2d_vector(vector<vector<T>> vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

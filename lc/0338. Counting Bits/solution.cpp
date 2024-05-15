@@ -24,20 +24,21 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    vector<int> countBits(int n)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
+        vector<int> ret = {0};
+        int bound = 1;
+        int cur = 0;
         for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
+            ret.push_back(1 + ret[cur]);
+            cur++;
+            if (cur == bound) {
+                cur = 0;
+                bound = bound * 2;
             }
         }
-        return n;
+        return ret;
     }
 };
 
@@ -47,8 +48,10 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    print_vector(solver.countBits(3));
+    print_vector(solver.countBits(5));
+    print_vector(solver.countBits(8));
+    print_vector(solver.countBits(0));
     return 0;
 }
 

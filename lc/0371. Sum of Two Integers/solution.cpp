@@ -24,20 +24,17 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    int getSum(int a, int b)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
-            }
+        int tmp;
+        while (a & b) {
+            tmp = (a & b) << 1;
+            cout << tmp << endl;
+            a = a ^ b;
+            b = tmp;
         }
-        return n;
+        return a ^ b;
     }
 };
 
@@ -47,8 +44,7 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    cout << solver.getSum(3, 5) << endl;
     return 0;
 }
 

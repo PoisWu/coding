@@ -24,31 +24,36 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    int longestOnes(vector<int> &nums, int k)
     {
-        sort(nums.begin(), nums.end());
         int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
+        int ret = 0;
+        int i = 0;
+        int count = 0;
+        for (int j = 0; j < n; j++) {
+            if (nums[j] == 0) {
+                count++;
+                while (count > k) {
+                    if (nums[i] == 0) {
+                        count--;
+                    }
+                    i++;
+                }
             }
+            ret = max(ret, j - i + 1);
         }
-        return n;
+        return ret;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
+    vector<int> v1 = {1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    cout << solver.longestOnes(v1, 2) << endl;
     return 0;
 }
 

@@ -18,26 +18,29 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec);
+void print_2d_vector(vector<vector<T>> vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
+    static bool cmp(vector<int> &a, vector<int> &b) { return a[1] < b[1]; }
 
 public:
-    int missingNumber(vector<int> &nums)
+    int eraseOverlapIntervals(vector<vector<int>> &intervals)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
+        sort(intervals.begin(), intervals.end(), cmp);
+        int ending = INT_MIN;
+        int count = 0;
+        for (int i = 0; i < intervals.size(); i++) {
+            if (intervals[i][0] < ending) {
+                // there are intersection
+                count++;
+            } else {
+                ending = intervals[i][1];
             }
         }
-        return n;
+        return count;
     }
 };
 
@@ -47,8 +50,6 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
     return 0;
 }
 
@@ -62,7 +63,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec)
+void print_2d_vector(vector<vector<T>> vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

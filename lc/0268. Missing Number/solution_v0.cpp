@@ -1,7 +1,6 @@
 #include <algorithm>
 #include <array>
 #include <bitset>
-#include <climits>
 #include <iostream>
 #include <map>
 #include <queue>
@@ -31,13 +30,13 @@ public:
     int missingNumber(vector<int> &nums)
     {
         sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
+        int cur = 0;
+        for (int i = 0; i < nums.size(); i++) {
             if (i != nums[i]) {
                 return i;
             }
         }
-        return n;
+        return nums.size();
     }
 };
 

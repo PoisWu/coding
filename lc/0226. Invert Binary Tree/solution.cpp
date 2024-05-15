@@ -22,22 +22,32 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right)
+        : val(x), left(left), right(right)
+    {
+    }
+};
+
+
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    TreeNode *invertTree(TreeNode *root)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
-            }
-        }
-        return n;
+        if (root == NULL)
+            return NULL;
+
+        TreeNode *tmp_left = root->left;
+        TreeNode *tmp_right = root->right;
+        root->left = invertTree(tmp_right);
+        root->right = invertTree(tmp_left);
+        return root;
     }
 };
 

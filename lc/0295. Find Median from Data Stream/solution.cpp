@@ -22,33 +22,48 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
-class Solution
+class MedianFinder
 {
-private:
-    static const int mod = 1000000007;
+    multiset<int> set;
+    multiset<int>::iterator iter;
+    double result;
 
 public:
-    int missingNumber(vector<int> &nums)
+    MedianFinder()
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
-            }
-        }
-        return n;
+        set.clear();
+        result = 0;
     }
+
+    void addNum(int num)
+    {
+        set.insert(num);
+
+        if (set.size() % 2 == 1) {
+            // 0x00 -> 0x000
+            if (num >= *iter) {
+                iter = next(iter, 1);
+            }
+            result = *iter;
+
+        } else {
+            // 00x00 -> 000x00
+            if (num < *iter) {
+                iter = prev(iter, 1);
+            }
+            result = *iter * 0.5 + *next(iter, 1) * 0.5;
+        }
+    }
+
+    double findMedian() { return result; }
 };
+
 
 int main()
 {
-    Solution solver;
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
     return 0;
 }
 

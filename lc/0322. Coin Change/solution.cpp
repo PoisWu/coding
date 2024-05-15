@@ -24,31 +24,29 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
-    int missingNumber(vector<int> &nums)
+    int coinChange(vector<int> &coins, int amount)
     {
-        sort(nums.begin(), nums.end());
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            if (i != nums[i]) {
-                return i;
+        vector<int> dp(amount + 1, INT_MAX / 2);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (auto coin : coins) {
+                if (coin <= i) {
+                    dp[i] = min(dp[i], 1 + dp[i - coin]);
+                }
             }
         }
-        return n;
+        return dp[amount] == INT_MAX / 2 ? -1 : dp[amount];
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<int> v1 = {1, 2, 5};
+    cout << solver.coinChange(v1, 11) << endl;
+    vector<int> v2 = {2};
+    cout << solver.coinChange(v2, 3) << endl;
     return 0;
 }
 
