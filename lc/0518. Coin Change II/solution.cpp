@@ -29,8 +29,8 @@ public:
     {
         vector<int> dp(amount + 1, 0);
         dp[0] = 1;
-        for (int coin : coins) {
-            for (int i = 1; i <= amount; i++) {
+        for (auto coin : coins) {
+            for (int i = 0; i <= amount; i++) {
                 if (i >= coin)
                     dp[i] += dp[i - coin];
             }
@@ -42,11 +42,10 @@ public:
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<int> v1 = {2};
+    vector<int> v2 = {1, 2, 5};
+    cout << solver.change(3, v1) << endl;
+    cout << solver.change(5, v2) << endl;
     return 0;
 }
 

@@ -24,40 +24,47 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
-    string longestPalindrome(string t)
+    string longestPalindrome(string s)
     {
-        string s = "#";
-        for (char c : t) {
-            s.push_back(c);
-            s += "#";
+        string t = s;
+        t = "#";
+        for (char c : s) {
+            t.push_back(c);
+            t.push_back('#');
         }
-        int reach = -1;
+
+        int n = t.length();
+        vector<int> p(n);
+        int rightmost = -1;
         int center = -1;
-        int n = s.length();
         int maxlen = -1;
-        int maxpos = -1;
-        vector<int> dp(n, 0);
+        int start = -1;
+
         for (int i = 0; i < n; i++) {
-            // X [X X X X . a . X o X X] X X X X X
             int r = 0;
-            if (i <= reach) {
-                r = min(dp[2 * center - i], reach - i);
+            if (i <= rightmost) {
+                int j = 2 * center - i;
+                r = min(p[j], rightmost - i);
             }
-            while (i + r < n && i - r >= 0 && s[i + r] == s[i - r]) {
+            while (i - r >= 0 && i + r < n && t[i - r] == t[i + r]) {
                 r++;
             }
-            dp[i] = r - 1;
-            if (reach < dp[i] + i) {
-                reach = dp[i] + i;
+            p[i] = r - 1;
+            if (i + p[i] > rightmost) {
                 center = i;
+                rightmost = i + p[i];
             }
-            if (maxlen < 2 * dp[i] + 1) {
-                maxlen = 2 * dp[i] + 1;
-                maxpos = i - dp[i];
+            if (maxlen < p[i]) {
+                maxlen = p[i];
+                start = i - p[i];
             }
         }
-        return t.substr(maxpos / 2, maxlen / 2);
+        // cout  << start << " " << maxlen << endl;
+        return s.substr(start / 2, maxlen);
     }
 };
 
@@ -65,7 +72,7 @@ int main()
 {
     Solution solver;
     string s1 = "babad";
-    string t1 = "cbbd";
+    string t1 = "cbba";
     cout << solver.longestPalindrome(s1) << endl;
     cout << solver.longestPalindrome(t1) << endl;
     return 0;

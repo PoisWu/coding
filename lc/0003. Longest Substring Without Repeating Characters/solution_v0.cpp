@@ -24,22 +24,32 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     int lengthOfLongestSubstring(string s)
     {
-        vector<int> freq(256, 0);
         int n = s.length();
-        int i = 0;
-        int ret = 0;
-        for (int j = 0; j < n; j++) {
-            freq[s[j]]++;
-            while (freq[s[j]] >= 2) {
-                freq[s[i]]--;
-                i++;
-            }
-            ret = max(ret, j - i + 1);
+        if (n == 0 || n == 1) {
+            return n;
         }
-        return ret;
+        // [start, end[
+        int start = 0;
+        int end = 1;
+        int res = 0;
+        unordered_map<char, int> m;
+        m[s[start]] = start;
+        while (end < n) {
+            if (m.find(s[end]) != m.end() && m[s[end]] >= start) {
+                res = max(res, end - start);
+                start = m[s[end]] + 1;
+            }
+            m[s[end]] = end;
+            end++;
+        }
+        res = max(res, end - start);
+        return res;
     }
 };
 
@@ -47,10 +57,16 @@ int main()
 {
     Solution solver;
     vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    string s1 = "abcabcbb";
+    string s2 = "pwwkew";
+    string s3 = "bbbbb";
+    string s4 = "abba";
+    string s5 = "tmmzuxt";
+    cout << solver.lengthOfLongestSubstring(s1) << endl;
+    cout << solver.lengthOfLongestSubstring(s2) << endl;
+    cout << solver.lengthOfLongestSubstring(s3) << endl;
+    cout << solver.lengthOfLongestSubstring(s4) << endl;
+    cout << solver.lengthOfLongestSubstring(s5) << endl;
     return 0;
 }
 
