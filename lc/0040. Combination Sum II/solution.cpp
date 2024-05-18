@@ -24,34 +24,46 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+    vector<int> ret;
+    vector<vector<int>> rets;
+
 public:
-    vector<vector<string>> groupAnagrams(vector<string> &strs)
+    vector<vector<int>> combinationSum2(vector<int> &nums, int t)
     {
-        unordered_map<string, vector<string>> map;
-        for (string s : strs) {
-            string tmp = s;
-            sort(tmp.begin(), tmp.end());
-            if (map.find(tmp) == map.end()) {
-                map[tmp] = {s};
-            } else {
-                map[tmp].push_back(s);
+        rets.clear();
+        ret.clear();
+        sort(nums.begin(), nums.end());
+        dfs(nums, t, 0, true);
+        return vector<vector<int>>(rets.begin(), rets.end());
+    }
+    void dfs(vector<int> &nums, int t, int idx, bool pre)
+    {
+        if (t == 0) {
+            rets.push_back(ret);
+            return;
+        }
+        if (idx == nums.size()) {
+            return;
+        }
+
+        if (nums[idx] <= t) {
+            if (idx == 0 || nums[idx - 1] != nums[idx] || pre) {
+                ret.push_back(nums[idx]);
+                dfs(nums, t - nums[idx], idx + 1, true);
+                ret.pop_back();
             }
         }
-        vector<vector<string>> ret;
-        for (auto p : map) {
-            ret.push_back(p.second);
-        }
-        return ret;
+        dfs(nums, t, idx + 1, false);
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
+    vector<int> v1 = {10, 1, 2, 7, 6, 1, 5};
     string s1 = "";
     string t1 = "";
-    // print_vector(solver.);
+    print_2d_vector(solver.combinationSum2(v1, 8));
     return 0;
 }
 

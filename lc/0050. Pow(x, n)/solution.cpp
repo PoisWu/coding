@@ -18,28 +18,35 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
 public:
-    vector<vector<string>> groupAnagrams(vector<string> &strs)
+    double myPow(double x, int n)
     {
-        unordered_map<string, vector<string>> map;
-        for (string s : strs) {
-            string tmp = s;
-            sort(tmp.begin(), tmp.end());
-            if (map.find(tmp) == map.end()) {
-                map[tmp] = {s};
-            } else {
-                map[tmp].push_back(s);
-            }
+        if (x == 0) {
+            return 0;
         }
-        vector<vector<string>> ret;
-        for (auto p : map) {
-            ret.push_back(p.second);
+        long long np = n;
+        if (np < 0) {
+            x = 1 / x;
+            np = -np;
+        }
+
+        if (n < 0) {
+            x = 1 / x;
+            n = -n;
+        }
+        double ret = 1;
+        while (np) {
+            if (np % 2) {
+                ret = ret * x;
+            }
+            x = x * x;
+            np = np / 2;
         }
         return ret;
     }
@@ -51,7 +58,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    // print_vector(solver.);
+    cout << solver.myPow(2, 10) << endl;
+    cout << solver.myPow(2, -2) << endl;
     return 0;
 }
 
@@ -65,7 +73,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

@@ -24,40 +24,45 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     int search(vector<int> &nums, int target)
     {
-        int l = 0;
-        int r = nums.size() - 1;
+        // 4,5,6,7,0,1,2
+        int left = 0;
+        int right = nums.size() - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target)
+                return mid;
 
-        //
-        while (l < r) {
-            int mid = l + (r - l) / 2;  // close l
-            if ((nums[mid] >= nums[0]) == (target >= nums[0])) {
-                if (nums[mid] < target) {
-                    l = mid + 1;
+            // check whether target and mid is in the same section
+            if ((target >= nums[0]) == (nums[mid] >= nums[0])) {
+                if (target < nums[mid]) {
+                    right = mid - 1;
                 } else {
-                    r = mid;
+                    left = mid + 1;
                 }
             } else {
-                // B   P t    S
                 if (target >= nums[0]) {
-                    // B  t  P     S
-                    r = mid - 1;
+                    right = mid - 1;
                 } else {
-                    // B    P t    S
-                    l = mid + 1;
+                    left = mid + 1;
                 }
             }
         }
-        return nums[l] == target ? l : -1;
+        if (left == right && nums[left] == target)
+            return left;
+        return -1;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {1, 3};
+    vector<int> v1 = {4, 5, 6, 7, 0, 1, 2};
     cout << solver.search(v1, 3) << endl;
     return 0;
 }

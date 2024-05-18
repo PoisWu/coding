@@ -22,30 +22,38 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right)
+        : val(x), left(left), right(right)
+    {
+    }
+};
+
+
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
-    int hight(TreeNode *root, int *diameter)
-    {
-        if (!root) {
-            return -1;
-        }
-        int h_left = hight(root->left);
-        int h_right = hight(root->right);
-        *diameter = max(*diameter, h_left + h_right + 2);
-        return 1 + max(h_left, h_right);
-    }
-
-
 public:
+    int ret;
     int diameterOfBinaryTree(TreeNode *root)
     {
-        int diameter = 0;
-
-        hight(root, &diameter);
-        return diameter;
+        ret = 0;
+        rank(root);
+        return ret;
+    }
+    int rank(TreeNode *node)
+    {
+        if (node == NULL) {
+            return 0;
+        }
+        int lrank = rank(node->left);
+        int rrank = rank(node->right);
+        ret = max(lrank + rrank, ret);
+        return 1 + max(lrank, rrank);
     }
 };
 
@@ -55,8 +63,6 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
     return 0;
 }
 

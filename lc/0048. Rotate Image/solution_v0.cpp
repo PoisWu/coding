@@ -24,24 +24,25 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
-    vector<vector<string>> groupAnagrams(vector<string> &strs)
+    void rotate(vector<vector<int>> &matrix)
     {
-        unordered_map<string, vector<string>> map;
-        for (string s : strs) {
-            string tmp = s;
-            sort(tmp.begin(), tmp.end());
-            if (map.find(tmp) == map.end()) {
-                map[tmp] = {s};
-            } else {
-                map[tmp].push_back(s);
+        int n = matrix.size();
+        // Transpose
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                swap(matrix[i][j], matrix[j][i]);
             }
         }
-        vector<vector<string>> ret;
-        for (auto p : map) {
-            ret.push_back(p.second);
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                swap(matrix[i][j], matrix[i][n - 1 - j]);
+            }
         }
-        return ret;
     }
 };
 
@@ -51,7 +52,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    // print_vector(solver.);
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 }
 

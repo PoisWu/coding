@@ -24,24 +24,30 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-
 public:
     void rotate(vector<vector<int>> &matrix)
     {
         int n = matrix.size();
-        // Transpose
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                swap(matrix[i][j], matrix[j][i]);
+        int row = 0;
+        int start = 0;
+        int end = n - 2;
+        while (start <= end) {
+            for (int j = start; j <= end; j++) {
+                int x0 = row;
+                int y0 = j;
+                int x1 = y0;
+                int y1 = n - 1 - x0;
+                int x2 = y1;
+                int y2 = n - 1 - x1;
+                int x3 = y2;
+                int y3 = n - 1 - x2;
+                swap(matrix[x0][y0], matrix[x1][y1]);
+                swap(matrix[x3][y3], matrix[x0][y0]);
+                swap(matrix[x2][y2], matrix[x3][y3]);
             }
-        }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n / 2; j++) {
-                swap(matrix[i][j], matrix[i][n - 1 - j]);
-            }
+            row++;
+            start++;
+            end--;
         }
     }
 };
@@ -49,11 +55,12 @@ public:
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<vector<int>> v1 = {};
+    v1.push_back({1, 2, 3});
+    v1.push_back({4, 5, 6});
+    v1.push_back({7, 8, 9});
+    solver.rotate(v1);
+    print_2d_vector(v1);
     return 0;
 }
 

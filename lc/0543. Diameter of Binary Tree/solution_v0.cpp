@@ -18,30 +18,34 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
-public:
-    vector<vector<string>> groupAnagrams(vector<string> &strs)
+private:
+    static const int mod = 1000000007;
+
+    int hight(TreeNode *root, int *diameter)
     {
-        unordered_map<string, vector<string>> map;
-        for (string s : strs) {
-            string tmp = s;
-            sort(tmp.begin(), tmp.end());
-            if (map.find(tmp) == map.end()) {
-                map[tmp] = {s};
-            } else {
-                map[tmp].push_back(s);
-            }
+        if (!root) {
+            return -1;
         }
-        vector<vector<string>> ret;
-        for (auto p : map) {
-            ret.push_back(p.second);
-        }
-        return ret;
+        int h_left = hight(root->left);
+        int h_right = hight(root->right);
+        *diameter = max(*diameter, h_left + h_right + 2);
+        return 1 + max(h_left, h_right);
+    }
+
+
+public:
+    int diameterOfBinaryTree(TreeNode *root)
+    {
+        int diameter = 0;
+
+        hight(root, &diameter);
+        return diameter;
     }
 };
 
@@ -51,7 +55,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    // print_vector(solver.);
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 }
 
@@ -65,7 +70,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

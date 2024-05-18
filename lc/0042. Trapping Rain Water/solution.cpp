@@ -18,28 +18,27 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
 public:
-    vector<vector<string>> groupAnagrams(vector<string> &strs)
+    int trap(vector<int> &height)
     {
-        unordered_map<string, vector<string>> map;
-        for (string s : strs) {
-            string tmp = s;
-            sort(tmp.begin(), tmp.end());
-            if (map.find(tmp) == map.end()) {
-                map[tmp] = {s};
-            } else {
-                map[tmp].push_back(s);
-            }
+        int n = height.size();
+        vector<int> rightmost(n, 0);
+        vector<int> leftmost(n, 0);  // i
+        for (int i = 1; i < n; i++) {
+            leftmost[i] = max(leftmost[i - 1], height[i - 1]);
         }
-        vector<vector<string>> ret;
-        for (auto p : map) {
-            ret.push_back(p.second);
+        for (int i = n - 2; i >= 0; i--) {
+            rightmost[i] = max(rightmost[i + 1], height[i + 1]);
+        }
+        int ret = 0;
+        for (int i = 0; i < n; i++) {
+            ret += max(0, min(leftmost[i], rightmost[i]) - height[i]);
         }
         return ret;
     }
@@ -48,10 +47,10 @@ public:
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
+    vector<int> v1 = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
     string s1 = "";
     string t1 = "";
-    // print_vector(solver.);
+    cout << solver.trap(v1) << endl;
     return 0;
 }
 
@@ -65,7 +64,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

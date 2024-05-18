@@ -18,30 +18,25 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
 public:
-    vector<vector<string>> groupAnagrams(vector<string> &strs)
+    int jump(vector<int> &nums)
     {
-        unordered_map<string, vector<string>> map;
-        for (string s : strs) {
-            string tmp = s;
-            sort(tmp.begin(), tmp.end());
-            if (map.find(tmp) == map.end()) {
-                map[tmp] = {s};
-            } else {
-                map[tmp].push_back(s);
+        vector<int> dp(nums.size(), INT_MAX);
+        // dp[i] min step from 0 to i.
+        int n = nums.size();
+        dp[0] = 0;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n && j <= i + nums[i]; j++) {
+                dp[j] = min(dp[i] + 1, dp[j]);
             }
         }
-        vector<vector<string>> ret;
-        for (auto p : map) {
-            ret.push_back(p.second);
-        }
-        return ret;
+        return dp[n - 1];
     }
 };
 
@@ -51,7 +46,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    // print_vector(solver.);
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 }
 
@@ -65,7 +61,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

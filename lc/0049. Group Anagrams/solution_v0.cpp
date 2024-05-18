@@ -24,34 +24,32 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     vector<vector<string>> groupAnagrams(vector<string> &strs)
     {
-        unordered_map<string, vector<string>> map;
-        for (string s : strs) {
-            string tmp = s;
+        unordered_map<string, vector<string>> m;
+        for (auto str : strs) {
+            string tmp = str;
             sort(tmp.begin(), tmp.end());
-            if (map.find(tmp) == map.end()) {
-                map[tmp] = {s};
-            } else {
-                map[tmp].push_back(s);
-            }
+            m[tmp].push_back(str);
         }
-        vector<vector<string>> ret;
-        for (auto p : map) {
-            ret.push_back(p.second);
+
+        vector<vector<string>> res;
+        for (auto i : m) {
+            res.push_back(i.second);
         }
-        return ret;
+        return res;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    // print_vector(solver.);
+    vector<string> v1 = {"eat", "tea", "tan", "ate", "nat", "bat"};
+    print_2d_vector(solver.groupAnagrams(v1));
     return 0;
 }
 

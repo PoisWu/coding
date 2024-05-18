@@ -25,21 +25,28 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    vector<vector<string>> groupAnagrams(vector<string> &strs)
+    vector<vector<int>> permute(vector<int> &nums)
     {
-        unordered_map<string, vector<string>> map;
-        for (string s : strs) {
-            string tmp = s;
-            sort(tmp.begin(), tmp.end());
-            if (map.find(tmp) == map.end()) {
-                map[tmp] = {s};
-            } else {
-                map[tmp].push_back(s);
+        queue<vector<int>> q;
+
+        q.push({nums[0]});
+        for (int i = 1; i < nums.size(); i++) {
+            int nb_ele = q.size();
+            while (nb_ele--) {
+                vector<int> arr = q.front();
+                q.pop();
+
+                for (int j = 0; j <= arr.size(); j++) {
+                    vector<int> tmp = arr;
+                    tmp.insert(tmp.begin() + j, nums[i]);
+                    q.push(tmp);
+                }
             }
         }
-        vector<vector<string>> ret;
-        for (auto p : map) {
-            ret.push_back(p.second);
+        vector<vector<int>> ret;
+        while (!q.empty()) {
+            ret.push_back(q.front());
+            q.pop();
         }
         return ret;
     }
@@ -48,10 +55,10 @@ public:
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
+    vector<int> v1 = {1, 2, 3};
     string s1 = "";
     string t1 = "";
-    // print_vector(solver.);
+    print_2d_vector(solver.permute(v1));
     return 0;
 }
 
