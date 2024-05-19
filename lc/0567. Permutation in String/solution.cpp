@@ -25,16 +25,21 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    bool canJump(vector<int> &nums)
+    bool checkInclusion(string s1, string s2)
     {
-        int reachable = 0;
-        int i = 0;
-        while (i <= reachable && i < nums.size()) {
-            reachable = max(reachable, i + nums[i]);
-            if (reachable >= nums.size() - 1) {
-                return true;
+        vector<int> table1(26, 0);
+        for (char c : s1) {
+            alphas1[c - 'a']++;
+        }
+        vector<int> table2(26, 0);
+        for (int j = 0; j < s2.length(); j++) {
+            table2[s2[j - 'a']]++;
+            if (j >= n - 1) {
+                if (table1 == table2) {
+                    return true;
+                }
+                table2[s2[j - n + 1]]--;
             }
-            i++;
         }
         return false;
     }
@@ -46,8 +51,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    cout << solver.checkInclusion("ab", "eidbaooo") << endl;
+    cout << solver.checkInclusion("ab", "eidboaoo") << endl;
     return 0;
 }
 

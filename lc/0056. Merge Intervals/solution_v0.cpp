@@ -24,32 +24,36 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-public:
-    static bool cmp(pair<int, int> &a, pair<int, int> &b)
+private:
+    static const int mod = 1000000007;
+
+    static bool cmp(vector<int> first, vector<int> second)
     {
-        return a.first < b.first;
+        return first[0] < second[0];
     }
+
+public:
     vector<vector<int>> merge(vector<vector<int>> &intervals)
     {
-        vector<pair<int, int>> v;
-        for (auto I : intervals) {
-            v.emplace_back(I[0], I[1]);
-        }
-        vector<vector<int>> ret;
-
-        sort(v.begin(), v.end(), cmp);
+        //[a1, b1] , [a2, b2] overlap if
+        // suppose a1 <= a2
+        // a1 <= a2 <= b1<= b2
+        // Interval sorted,
+        // I1
+        sort(intervals.begin(), intervals.end(), cmp);
+        vector<vector<int>> res;
         int i = 0;
         int n = intervals.size();
         while (i < n) {
-            int start = v[i].first;
-            int end = v[i].second;
-            while (i < n && v[i].first <= end) {
-                end = max(end, v[i].second);
+            int a = intervals[i][0];
+            int b = intervals[i][1];
+            while (i < n && intervals[i][0] <= b) {
+                b = max(b, intervals[i][1]);
                 i++;
             }
-            ret.push_back({start, end});
+            res.push_back({a, b});
         }
-        return ret;
+        return res;
     }
 };
 

@@ -24,19 +24,27 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-public:
-    bool canJump(vector<int> &nums)
+    bool equalTree(TreeNode *a, TreeNode *b)
     {
-        int reachable = 0;
-        int i = 0;
-        while (i <= reachable && i < nums.size()) {
-            reachable = max(reachable, i + nums[i]);
-            if (reachable >= nums.size() - 1) {
-                return true;
-            }
-            i++;
+        if (a == NULL || b == NULL) {
+            return a == b;
         }
-        return false;
+
+        return a->val == b->val && equalTree(a->left, b->left) &&
+               equalTree(a->right, b->right);
+    }
+
+public:
+    bool isSubtree(TreeNode *root, TreeNode *subRoot)
+    {
+        if (equalTree(root, subRoot))
+            return true;
+
+        if (root == NULL) {
+            return subRoot == NULL;
+        }
+        return isSubtree(root->left, subRoot) ||
+               isSubtree(root->right, subRoot);
     }
 };
 
