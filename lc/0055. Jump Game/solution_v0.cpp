@@ -24,19 +24,21 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     bool canJump(vector<int> &nums)
     {
-        int reachable = 0;
+        int n = nums.size();
+        // want to reach n-1
+        int canReach = 0;
         int i = 0;
-        while (i <= reachable && i < nums.size()) {
-            reachable = max(reachable, i + nums[i]);
-            if (reachable >= nums.size() - 1) {
-                return true;
-            }
+        while (i < n && i <= canReach) {
+            canReach = max(canReach, i + nums[i]);
             i++;
         }
-        return false;
+        return canReach >= n - 1;
     }
 };
 
