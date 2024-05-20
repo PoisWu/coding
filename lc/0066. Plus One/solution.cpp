@@ -18,37 +18,38 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
 public:
-    int uniquePaths(int m, int n)
+    vector<int> plusOne(vector<int> &digits)
     {
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-        dp[0][0] = 1;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i - 1 >= 0)
-                    dp[i][j] += dp[i - 1][j];
-                if (j - 1 >= 0)
-                    dp[i][j] += dp[i][j - 1];
-            }
+        int carry = 0;
+        int i = digits.size() - 1;
+        digits[i]++;
+        do {
+            digits[i] += carry;
+            carry = digits[i] / 10;
+            digits[i] = digits[i] % 10;
+            i--;
+        } while (i >= 0 && carry);
+        if (carry) {
+            digits.insert(digits.begin(), 1);
         }
-        return dp[m - 1][n - 1];
+        return digits;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
+    vector<int> v1 = {9};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    print_vector(solver.plusOne(v1));
     return 0;
 }
 
@@ -62,7 +63,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

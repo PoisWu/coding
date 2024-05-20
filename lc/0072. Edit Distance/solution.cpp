@@ -25,19 +25,29 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    int uniquePaths(int m, int n)
+    int minDistance(string w1, string w2)
     {
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-        dp[0][0] = 1;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i - 1 >= 0)
-                    dp[i][j] += dp[i - 1][j];
-                if (j - 1 >= 0)
-                    dp[i][j] += dp[i][j - 1];
+        int m = w1.length();
+        int n = w2.length();
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        for (int i = 0; i < m + 1; i++) {
+            dp[i][0] = i;
+        }
+        for (int j = 0; j < n + 1; j++) {
+            dp[0][j] = j;
+        }
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (w1[i - 1] == w2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] =
+                        min(dp[i - 1][j], min(dp[i][j - 1], dp[i - 1][j - 1])) +
+                        1;
+                }
             }
         }
-        return dp[m - 1][n - 1];
+        return dp[m][n];
     }
 };
 
