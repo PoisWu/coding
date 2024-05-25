@@ -24,15 +24,17 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    int leng_h;
+    int leng_v;
+
 public:
-    int m;
-    int n;
     bool exist(vector<vector<char>> &board, string word)
     {
-        m = board.size();
-        n = board[0].size();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        leng_h = board[0].size();
+        leng_v = board.size();
+        for (int i = 0; i < leng_v; i++) {
+            for (int j = 0; j < leng_h; j++) {
                 if (search(board, word, i, j, 0)) {
                     return true;
                 }
@@ -40,30 +42,30 @@ public:
         }
         return false;
     }
+
     bool search(vector<vector<char>> &board, string word, int x, int y, int idx)
     {
-        if (idx == word.length()) {
-            return true;
-        }
-        if (x < 0 || x >= m || y < 0 || y >= n || board[x][y] != word[idx]) {
+        if (x < 0 || x == leng_v || y < 0 || y == leng_h ||
+            board[x][y] != word[idx])
             return false;
-        }
-        char c = board[x][y];
-        board[x][y] = '0';
-        bool a = false;
-        a = a || search(board, word, x + 1, y, idx + 1);
-        a = a || search(board, word, x - 1, y, idx + 1);
-        a = a || search(board, word, x, y + 1, idx + 1);
-        a = a || search(board, word, x, y - 1, idx + 1);
-        board[x][y] = c;
-        return a;
+        if (idx == word.length() - 1)
+            return true;
+        char cur = board[x][y];
+        board[x][y] = 0;
+        bool found = search(board, word, x - 1, y, idx + 1) ||
+                     search(board, word, x + 1, y, idx + 1) ||
+                     search(board, word, x, y - 1, idx + 1) ||
+                     search(board, word, x, y + 1, idx + 1);
+        board[x][y] = cur;
+        return found;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
+    vector<vector<char>> v1 = {};
+
     string s1 = "";
     string t1 = "";
     return 0;
