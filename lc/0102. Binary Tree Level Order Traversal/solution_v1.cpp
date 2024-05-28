@@ -25,29 +25,29 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    static bool cmp(pair<int, int> &a, pair<int, int> &b)
+    vector<vector<int>> levelOrder(TreeNode *root)
     {
-        return a.first < b.first;
-    }
-    vector<vector<int>> merge(vector<vector<int>> &intervals)
-    {
-        vector<pair<int, int>> v;
-        for (auto I : intervals) {
-            v.emplace_back(I[0], I[1]);
-        }
         vector<vector<int>> ret;
-
-        sort(v.begin(), v.end(), cmp);
-        int i = 0;
-        int n = intervals.size();
-        while (i < n) {
-            int start = v[i].first;
-            int end = v[i].second;
-            while (i < n && v[i].first <= end) {
-                end = max(end, v[i].second);
-                i++;
+        vector<int> cur;
+        queue<TreeNode *> q;
+        if (root) {
+            q.push(root);
+        }
+        while (!q.empty()) {
+            cur.clear();
+            int n = q.size();
+            for (int i = 0; i < n; i++) {
+                TreeNode *node = q.front();
+                q.pop();
+                cur.push_back(node->val);
+                if (node->left) {
+                    q.push(node->left);
+                }
+                if (node->right) {
+                    q.push(node->right);
+                }
             }
-            ret.push_back({start, end});
+            ret.push_back(cur);
         }
         return ret;
     }

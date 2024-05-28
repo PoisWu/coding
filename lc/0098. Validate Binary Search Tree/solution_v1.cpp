@@ -18,38 +18,40 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right)
+        : val(x), left(left), right(right)
+    {
+    }
+};
+
 
 class Solution
 {
 public:
-    static bool cmp(pair<int, int> &a, pair<int, int> &b)
+    bool isValidBST(TreeNode *root) { return dfs(root, NULL, NULL); }
+    bool dfs(TreeNode *node, int *val_min, int *val_max)
     {
-        return a.first < b.first;
-    }
-    vector<vector<int>> merge(vector<vector<int>> &intervals)
-    {
-        vector<pair<int, int>> v;
-        for (auto I : intervals) {
-            v.emplace_back(I[0], I[1]);
+        if (node == NULL) {
+            return true;
         }
-        vector<vector<int>> ret;
-
-        sort(v.begin(), v.end(), cmp);
-        int i = 0;
-        int n = intervals.size();
-        while (i < n) {
-            int start = v[i].first;
-            int end = v[i].second;
-            while (i < n && v[i].first <= end) {
-                end = max(end, v[i].second);
-                i++;
-            }
-            ret.push_back({start, end});
+        if (val_min != NULL && node->val <= *val_min) {
+            return false;
         }
-        return ret;
+        if (val_max != NULL && node->val >= *val_max) {
+            return false;
+        }
+        return dfs(node->left, val_min, &node->val) &&
+               dfs(node->right, &node->val, val_max);
     }
 };
 
@@ -74,7 +76,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {
