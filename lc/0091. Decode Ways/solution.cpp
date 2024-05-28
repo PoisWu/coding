@@ -24,58 +24,45 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
+    vector<int> dp;
 
 public:
-    // recurence
-    // X X X X X X
-    // return numDecodings(s[pos:])
-    int ways(string s)
-    {
-        if (s.length() == 0)
-            return 1;
-        if (s[0] == '0')
-            return 0;
-        if (s.length() == 1)
-            return 1;
-
-        if (way.find(s) != way.end()) {
-            return way[s];
-        }
-
-        int w = ways(s.substr(1, s.length()));
-
-        int num = stoi(s.substr(0, 2));
-
-        if (num <= 26) {
-            w += ways(s.substr(2, s.length()));
-        }
-
-        way[s] = w;
-        return w;
-    }
     int numDecodings(string s)
     {
-        if (s.length() == 0)
-            return 0;
-        return ways(s);
+        int n = s.length();
+
+        dp = vector<int>(n + 1, -1);
+        dp[0] = 1;
+        return dfs(s, n);
     }
-    unordered_map<string, int> way;
+    int dfs(string s, int pos)
+    {
+        if (pos == 0) {
+            return dp[0];
+        }
+        if (dp[pos] != -1) {
+            return dp[pos];
+        }
+        int tmp = 0;
+        if (pos >= 1 && s[pos - 1] != '0') {
+            tmp += dfs(s, pos - 1);
+        }
+        if (pos >= 2) {
+            int a = stoi(s.substr(pos - 2, 2));
+            if (a <= 26 && a >= 10)
+                tmp += dfs(s, pos - 2);
+        }
+        dp[pos] = tmp;
+        return dp[pos];
+    }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "11106";
-    string s2 = "12";
-    string s3 = "";
-    string s4 = "12111211";
-    cout << solver.numDecodings(s1) << endl;
-    cout << solver.numDecodings(s2) << endl;
-    cout << solver.numDecodings(s3) << endl;
-    cout << solver.numDecodings(s4) << endl;
+    cout << solver.numDecodings("12") << endl;
+    cout << solver.numDecodings("226") << endl;
+    cout << solver.numDecodings("06") << endl;
     return 0;
 }
 
