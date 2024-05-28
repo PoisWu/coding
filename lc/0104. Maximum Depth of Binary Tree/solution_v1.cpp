@@ -22,6 +22,18 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
+class Solution
+{
+public:
+    int maxDepth(TreeNode *root)
+    {
+        if (root == NULL) {
+            return 0;
+        }
+        return 1 + max(maxDepth(root->left), maxDepth(root->right));
+    }
+};
+
 
 int main()
 {

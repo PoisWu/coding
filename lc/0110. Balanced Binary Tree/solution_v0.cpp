@@ -22,6 +22,29 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
+class Solution
+{
+public:
+    bool ret;
+    bool isBalanced(TreeNode *root)
+    {
+        ret = true;
+        h(root);
+        return ret;
+    }
+    int h(TreeNode *root)
+    {
+        if (root == NULL) {
+            return 0;
+        }
+        int hr = h(root->right);
+        int hl = h(root->left);
+        if (abs(hr - hl) > 1) {
+            ret = false;
+        }
+        return 1 + max(hr, hl);
+    }
+};
 
 int main()
 {

@@ -18,10 +18,40 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec);
+void print_2d_vector(vector<vector<T>> vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
+class Solution
+{
+public:
+    vector<vector<int>> levelOrder(TreeNode *root)
+    {
+        vector<vector<int>> ret;
+        vector<int> cur;
+        queue<TreeNode *> q;
+        if (root) {
+            q.push(root);
+        }
+        while (!q.empty()) {
+            cur.clear();
+            int n = q.size();
+            for (int i = 0; i < n; i++) {
+                TreeNode *node = q.front();
+                q.pop();
+                cur.push_back(node->val);
+                if (node->left) {
+                    q.push(node->left);
+                }
+                if (node->right) {
+                    q.push(node->right);
+                }
+            }
+            ret.push_back(cur);
+        }
+        return ret;
+    }
+};
 
 int main()
 {
@@ -44,7 +74,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec)
+void print_2d_vector(vector<vector<T>> vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {
