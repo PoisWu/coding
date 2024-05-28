@@ -18,26 +18,30 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
 public:
-    int uniquePaths(int m, int n)
+    bool checkInclusion(string s1, string s2)
     {
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-        dp[0][0] = 1;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i - 1 >= 0)
-                    dp[i][j] += dp[i - 1][j];
-                if (j - 1 >= 0)
-                    dp[i][j] += dp[i][j - 1];
+        vector<int> table1(26, 0);
+        for (char c : s1) {
+            alphas1[c - 'a']++;
+        }
+        vector<int> table2(26, 0);
+        for (int j = 0; j < s2.length(); j++) {
+            table2[s2[j - 'a']]++;
+            if (j >= n - 1) {
+                if (table1 == table2) {
+                    return true;
+                }
+                table2[s2[j - n + 1]]--;
             }
         }
-        return dp[m - 1][n - 1];
+        return false;
     }
 };
 
@@ -47,8 +51,8 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    cout << solver.checkInclusion("ab", "eidbaooo") << endl;
+    cout << solver.checkInclusion("ab", "eidboaoo") << endl;
     return 0;
 }
 
@@ -62,7 +66,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {

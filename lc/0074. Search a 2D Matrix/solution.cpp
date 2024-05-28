@@ -25,30 +25,36 @@ void print_vector(vector<T> vec);
 class Solution
 {
 public:
-    int uniquePaths(int m, int n)
+    bool searchMatrix(vector<vector<int>> &matrix, int t)
     {
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-        dp[0][0] = 1;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i - 1 >= 0)
-                    dp[i][j] += dp[i - 1][j];
-                if (j - 1 >= 0)
-                    dp[i][j] += dp[i][j - 1];
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int l = 0;
+        int r = m * n - 1;
+        while (l < r) {
+            int mid = l + (r - l) / 2;
+            int x = mid / n;
+            int y = mid % n;
+            if (matrix[x][y] < t) {
+                l = mid + 1;
+            } else {
+                r = mid;
             }
         }
-        return dp[m - 1][n - 1];
+        int x = l / n;
+        int y = l % n;
+        return t == matrix[x][y];
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<int> v1 = {};
-    string s1 = "";
-    string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
+    vector<vector<int>> v1 = {};
+    v1.push_back({1, 3, 5, 7});
+    v1.push_back({10, 11, 16, 20});
+    v1.push_back({23, 30, 34, 60});
+    cout << solver.searchMatrix(v1, 3) << endl;
     return 0;
 }
 

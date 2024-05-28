@@ -24,45 +24,42 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
+private:
+    static const int mod = 1000000007;
+
 public:
     void setZeros(vector<vector<int>> &matrix)
     {
-        int rowzero = 1;
-        int m = matrix.size();
-        int n = matrix[0].size();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (matrix[i][j] == 0) {
-                    if (i == 0)
-                        rowzero = 0;
-                    else
-                        matrix[i][0] = 0;
-                    matrix[0][j] = 0;
+        int ROW = matrix.size();
+        int COL = matrix[0].size();
+        bool rowZero = false;
+        for (int r = 0; r < ROW; r++) {
+            for (int c = 0; c < COL; c++) {
+                if (matrix[r][c] == 0) {
+                    matrix[0][c] = 0;
+                    if (r != 0) {
+                        matrix[r][0] = 0;
+                    } else {
+                        rowZero = true;
+                    }
                 }
             }
         }
-        for (int j = 1; j < n; j++) {
-            if (matrix[0][j] == 0) {
-                for (int i = 0; i < m; i++) {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-
-        for (int i = 1; i < m; i++) {
-            if (matrix[i][0] == 0) {
-                for (int j = 0; j < n; j++) {
-                    matrix[i][j] = 0;
+        for (int r = 1; r < ROW; r++) {
+            for (int c = 1; c < COL; c++) {
+                if (matrix[r][0] * matrix[0][c] == 0) {
+                    matrix[r][c] = 0;
                 }
             }
         }
         if (matrix[0][0] == 0) {
-            for (int i = 0; i < m; i++) {
+            for (int i = 0; i < ROW; i++) {
                 matrix[i][0] = 0;
             }
         }
-        if (rowzero == 0) {
-            for (int j = 0; j < n; j++) {
+
+        if (rowZero) {
+            for (int j = 0; j < COL; j++) {
                 matrix[0][j] = 0;
             }
         }
@@ -75,8 +72,6 @@ int main()
     vector<int> v1 = {};
     string s1 = "";
     string t1 = "";
-    cout << solver.<< endl;
-    print_vector(solver.);
     return 0;
 }
 

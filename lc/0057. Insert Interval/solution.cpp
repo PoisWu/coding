@@ -24,59 +24,53 @@ void print_vector(vector<T> vec);
 
 class Solution
 {
-private:
-    static const int mod = 1000000007;
+    static bool cmp(pair<int, int> &a, pair<int, int> &b)
+    {
+        if (a.first != b.first) {
+            return a.first < b.first;
+        } else {
+            return a.second > b.second;
+        }
+    }
 
 public:
     vector<vector<int>> insert(vector<vector<int>> &intervals,
                                vector<int> &newInterval)
     {
-        vector<vector<int>> rets;
+        vector<pair<int, int>> p;
+        for (auto I : intervals) {
+            p.emplace_back(I[0], 1);
+            p.emplace_back(I[1], -1);
+        }
+        p.emplace_back(newInterval[0], 1);
+        p.emplace_back(newInterval[1], -1);
+        sort(p.begin(), p.end(), cmp);
 
-        bool flag = true;
-        int n = intervals.size();
-        int i = 0;
-
-        while (i < n) {
-            int start;
-            int end;
-            if (flag && newInterval[0] <= intervals[i][0]) {
-                flag = false;
-                start = newInterval[0];
-                end = newInterval[1];
-                while (i < n && intervals[i][0] <= end) {
-                    end = max(end, intervals[i][1]);
-                    i++;
-                }
-            } else {
-                start = intervals[i][0];
-                end = intervals[i][1];
-                while (i < n && intervals[i][0] <= end) {
-                    if (flag && newInterval[0] <= end) {
-                        end = max(end, newInterval[1]);
-                        flag = false;
-                    }
-                    end = max(end, intervals[i][1]);
-                    i++;
-                }
+        int sum = 0;
+        vector<vector<int>> ret;
+        int start;
+        int end;
+        for (int i = 0; i < p.size(); i++) {
+            if (sum == 0) {
+                start = p[i].first;
+            } else if (sum > 0 && sum + p[i].second == 0) {
+                end = p[i].first;
+                ret.push_back({start, end});
             }
-            rets.push_back({start, end});
+            sum += p[i].second;
         }
-        if (flag) {
-            rets.push_back(newInterval);
-        }
-        return rets;
+        return ret;
     }
 };
 
 int main()
 {
     Solution solver;
-    vector<vector<int>> v1 = {};
-    v1.push_back({1, 3});
-    v1.push_back({6, 9});
-    vector<int> newI = {2, 5};
-    print_2d_vector(solver.insert(v1, newI));
+    vector<int> v1 = {};
+    string s1 = "";
+    string t1 = "";
+    cout << solver.<< endl;
+    print_vector(solver.);
     return 0;
 }
 

@@ -18,26 +18,33 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec);
+void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
 class Solution
 {
-public:
-    int uniquePaths(int m, int n)
+    bool equalTree(TreeNode *a, TreeNode *b)
     {
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-        dp[0][0] = 1;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i - 1 >= 0)
-                    dp[i][j] += dp[i - 1][j];
-                if (j - 1 >= 0)
-                    dp[i][j] += dp[i][j - 1];
-            }
+        if (a == NULL || b == NULL) {
+            return a == b;
         }
-        return dp[m - 1][n - 1];
+
+        return a->val == b->val && equalTree(a->left, b->left) &&
+               equalTree(a->right, b->right);
+    }
+
+public:
+    bool isSubtree(TreeNode *root, TreeNode *subRoot)
+    {
+        if (equalTree(root, subRoot))
+            return true;
+
+        if (root == NULL) {
+            return subRoot == NULL;
+        }
+        return isSubtree(root->left, subRoot) ||
+               isSubtree(root->right, subRoot);
     }
 };
 
@@ -62,7 +69,7 @@ void print_vector(vector<T> vec)
 }
 
 template <typename T>
-void print_2d_vector(vector<vector<T>> vvec)
+void print_2d_vector(vector<vector<T> > vvec)
 {
     for (auto vec : vvec) {
         for (auto e : vec) {
