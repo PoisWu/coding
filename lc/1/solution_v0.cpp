@@ -21,50 +21,28 @@ template <typename T>
 void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
-
-class Node
-{
-public:
-    int val;
-    vector<Node *> neighbors;
-    Node()
-    {
-        val = 0;
-        neighbors = vector<Node *>();
-    }
-    Node(int _val)
-    {
-        val = _val;
-        neighbors = vector<Node *>();
-    }
-    Node(int _val, vector<Node *> _neighbors)
-    {
-        val = _val;
-        neighbors = _neighbors;
-    }
-};
-
 class Solution
 {
-private:
-    static const int mod = 1000000007;
-    unordered_map<Node *, Node *> map;
-
 public:
-    Node *cloneGraph(Node *node)
+    string clearDigits(string s)
     {
-        Node *newNode = new Node(node->val);
-        map[node] = newNode;
-        for (auto nextNode : node->neighbors) {
-            if (map.find(nextNode) != map.end()) {
-                newNode->neighbors.push_back(map[nextNode]);
+        vector<char> ret;
+        string rets = "";
+        for (char c : s) {
+            if (isdigit(c)) {
+                if (!ret.empty()) {
+                    ret.pop_back();
+                }
             } else {
-                newNode->neighbors.push_back(cloneGraph(nextNode));
+                ret.push_back(c);
             }
         }
-        return newNode;
+        for (char c : ret)
+            rets.push_back(c);
+        return rets;
     }
 };
+
 
 int main()
 {
