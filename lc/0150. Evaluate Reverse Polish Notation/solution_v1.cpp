@@ -3,7 +3,6 @@
 #include <bitset>
 #include <climits>
 #include <iostream>
-#include <list>
 #include <map>
 #include <queue>
 #include <set>
@@ -23,52 +22,45 @@ void print_2d_vector(vector<vector<T> > vvec);
 template <typename T>
 void print_vector(vector<T> vec);
 
-
-class LRUCache
+class Solution
 {
 public:
-    list<int> mylist;
-    int cap;
-    int size;
-    unordered_map<int, list::iterator> key2it;
-    unordered_map<int, int> key2val;
-    LRUCache(int capacity)
+    int evalRPN(vector<string> &tokens)
     {
-        cap = capacity;
-        size = 0;
-    }
-
-    int get(int key)
-    {
-        if (key2it.find(key) == key2it.end()) {
-            return -1;
-        } else {
-            mylist.erase(key2it[key]);
-            mylist.push_front(key);
-            key2it[key] = mylist.begin();
-            return key2val[key];
+        stack<int> q;
+        for (auto s : tokens) {
+            if (s == "+") {
+                int b = q.top();
+                q.pop();
+                int a = q.top();
+                q.pop();
+                q.push(a + b);
+            } else if (s == "*") {
+                int b = q.top();
+                q.pop();
+                int a = q.top();
+                q.pop();
+                q.push(a * b);
+            } else if (s == "-") {
+                int b = q.top();
+                q.pop();
+                int a = q.top();
+                q.pop();
+                q.push(a - b);
+            } else if (s == "/") {
+                int b = q.top();
+                q.pop();
+                int a = q.top();
+                q.pop();
+                q.push(a / b);
+            } else {
+                q.push(stoi(s));
+            }
         }
-    }
-
-    void put(int key, int value)
-    {
-        if (get(key) != -1) {
-            key2val = value;
-        }
-
-        if (size == cap) {
-            int removekey = mylist.back();
-            mylist.pop_back();
-            key2it.erase(removekey);
-            key2val.erase(removekey);
-            size--;
-        }
-        mylist.push_front(key);
-        key2it[key] = mylist.begin();
-        key2val[key] = value;
-        size++;
+        return q.top();
     }
 };
+
 
 int main()
 {

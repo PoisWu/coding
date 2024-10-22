@@ -1,16 +1,12 @@
 CXX      := g++
 # CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror
-CXXFLAGS := -Wall -Wextra -g
+# CXXFLAGS := -Wall -Wextra -g -fsanitize=address
+CXXFLAGS := -Wall -Wextra -g 
 SRC      := solution.cpp 
 
-OBJECTS  := $(SRC:%.cpp=%.o)
 
-
-main: $(OBJECTS)
+main: solution.cpp
 	$(CXX) $(CXXFLAGS) -o main $^ 
-
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: 
 	./main
