@@ -21,20 +21,24 @@ using namespace std;
 using lli = long long int;
 
 template <typename T>
-void print_2d_vector(vector<vector<T> > vvec);
+void print_2d_vector(vector<vector<T> > vvec)
+{
+    for (auto vec : vvec) {
+        for (auto e : vec) {
+            cout << e << " ";
+        }
+        cout << endl;
+    }
+}
+
 template <typename T>
-void print_vector(vector<T> vec);
+void print_vector(vector<T> vec)
+{
+    for (auto e : vec) {
+        cout << e << " ";
+    }
+    cout << endl;
+}
 
 
-/*int main()*/
-/*{*/
-/*    Solution solver;*/
-/*    vector<int> v1 = {};*/
-/*    string s1 = "";*/
-/*    string t1 = "";*/
-/*    cout << solver.<< endl;*/
-/*    print_vector(solver.);*/
-/*    return 0;*/
-/*}*/
-
-#endif // !HELPER_H
+#endif // HELPER_H
